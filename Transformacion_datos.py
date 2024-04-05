@@ -28,7 +28,7 @@ class transformacion:
         serie_tiempo = self.df
         self.modelo_arima = pm.auto_arima(serie_tiempo)
 
-    def generar_pronostico(self, periodos_predecir=10):        
+    def generar_pronostico(self, periodos_predecir=10,elementos_mostrar=self.df.shape[0]):        
         st.set_option('deprecation.showPyplotGlobalUse', False)
 
         pronostico, intervalo_confianza = self.modelo_arima.predict(n_periods=periodos_predecir, return_conf_int=True)
@@ -36,9 +36,10 @@ class transformacion:
         proximo_periodo = pd.date_range(start=self.df.index[-1], periods=periodos_predecir, freq='W')
         # proximo_periodo = pd.date_range(start=fecha_inicio, periods=periodos_predecir, freq='W')
 
+        inicio_seriereal=self.df.shape[0]-elementos_mostrar
 
         plt.figure(figsize=(12, 6))
-        plt.plot(self.df.index, self.df, label='Datos reales', color='blue')
+        plt.plot(self.df.index[inicio_seriereal:], self.df[inicio_seriereal:], label='Datos reales', color='blue')
         plt.plot(proximo_periodo, pronostico, label='Pronóstico', color='red')
         plt.fill_between(proximo_periodo, intervalo_confianza[:, 0], intervalo_confianza[:, 1], color='pink', alpha=0.3)
         plt.title('Comparación de pronóstico vs. datos reales')
