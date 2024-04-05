@@ -71,7 +71,7 @@ class Visualizacion_pronostico_reses:
                 self.elementos_mostrar=mostrar_serie_real     
                 trans.generar_pronostico()
                 trans.imprimir_pronostico()
-                st.write(llevar_pronostico_a_df())
+                st.write(trans.llevar_pronostico_a_df())
                 st.info('El mejor modelo encontrado es')
                 st.write(trans.modelo_arima.summary())
 
