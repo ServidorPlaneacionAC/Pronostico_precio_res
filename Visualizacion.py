@@ -43,7 +43,13 @@ class Visualizacion_pronostico_reses:
                     mostrar_serie_real = st.slider("Periodos a mostrar", 10, trans.df.shape[0], trans.df.shape[0], 1)
                 with col2:
                     periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
-                trans.generar_pronostico(periodos_predecir,mostrar_serie_real)
+                trans.periodos_predecir=periodos_predecir
+                self.elementos_mostrar=mostrar_serie_real     
+                trans.generar_pronostico()
+                trans.imprimir_pronostico()
+                st.write(llevar_pronostico_a_df())
+                st.info('El mejor modelo encontrado es')
+                st.write(trans.modelo_arima.summary())
 
             else:
                 st.error('El formato del archivo cargado no coincide con el esperado')
