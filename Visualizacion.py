@@ -38,8 +38,8 @@ class Visualizacion_pronostico_reses:
                 trans=transformacion(self.dataframe_serie_tiempo)
                 trans.combinar_partidas_reses()
                 trans.generar_modelo()
-                periodos_predecir = st.slider("Periodos a pronosticar", 10, trans.df.shape[0], 1)
-                mostrar_serie_real = st.slider("Periodos a mostrar", 10, trans.df.shape[0], 1)
+                periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
+                mostrar_serie_real = st.slider("Periodos a mostrar", 10, trans.df.shape[0], trans.df.shape[0], 1)
                 trans.generar_pronostico(periodos_predecir,mostrar_serie_real)
 
             else:
