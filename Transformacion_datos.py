@@ -40,7 +40,9 @@ class transformacion:
         plt.xlabel('Fecha')
         plt.ylabel('Valor')
         plt.legend()
-        plt.show()
+
+        # Mostrar la gráfica en Streamlit
+        st.pyplot()
         
         st.info('El mejor modelo encontrado es')
         st.write(self.modelo_arima.summary())
