@@ -44,8 +44,9 @@ class transformacion:
         plt.legend()
         st.pyplot()
         
-        df2=pd.DataFrame({'Periodo':proximo_periodo,'Pronostico':pronostico})
-        df2=df2.set_index('Periodo')
+        df_resultado=pd.DataFrame({'Periodo':proximo_periodo,'Pronostico':pronostico})
+        df_resultado=df_resultado.set_index('Periodo')
+        st.write(df_resultado)
 
         st.info('El mejor modelo encontrado es')
         st.write(self.modelo_arima.summary())
