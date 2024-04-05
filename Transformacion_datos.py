@@ -27,8 +27,6 @@ class transformacion:
     def generar_modelo(self) -> None:
         serie_tiempo = self.df
         self.modelo_arima = pm.auto_arima(serie_tiempo)
-        st.info('El mejor modelo encontrado es')
-        st.write(self.modelo_arima.summary())
 
     def generar_pronostico(self, periodos_predecir=70):
         pronostico, intervalo_confianza = self.modelo_arima.predict(n_periods=periodos_predecir, return_conf_int=True)
@@ -43,3 +41,6 @@ class transformacion:
         plt.ylabel('Valor')
         plt.legend()
         plt.show()
+        
+        st.info('El mejor modelo encontrado es')
+        st.write(self.modelo_arima.summary())
