@@ -5,7 +5,7 @@ import pmdarima as pm
 from pmdarima import auto_arima
 import matplotlib.pyplot as plt
 
-class transformacion:
+class pronosticar_precio_reses:
     def __init__(self,df) -> None:
         self.df = df
         self.modelo_arima=None
