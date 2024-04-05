@@ -30,7 +30,7 @@ class transformacion:
 
     def generar_pronostico(self, periodos_predecir=70):
         pronostico, intervalo_confianza = self.modelo_arima.predict(n_periods=periodos_predecir, return_conf_int=True)
-        proximo_periodo = pd.date_range(start=self.df.index[-1], periods=periodos_predecir+1)
+        proximo_periodo = pd.date_range(start=self.df.index[-1], periods=periodos_predecir)
 
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index, self.df, label='Datos reales', color='blue')
