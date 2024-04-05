@@ -46,7 +46,7 @@ class pronosticar_precio_reses:
         plt.legend()
         st.pyplot()
         
-    def llevar_pronostico_a_df(self) -> DataFrame:
+    def llevar_pronostico_a_df(self):
         df_resultado=pd.DataFrame({'Periodo':self.proximo_periodo,'Pronóstico':self.pronostico})
         df_resultado=df_resultado.set_index('Periodo')
         return df_resultado
