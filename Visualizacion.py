@@ -2,6 +2,7 @@ import pandas as pd
 # from Class_Google_Sheet_STL import ConexionGoogleSheets
 from Transformacion_datos import transformacion
 import streamlit as st
+from openpyxl.styles import PatternFill
 
 class Visualizacion_pronostico_reses:
     def __init__(self) -> None:
