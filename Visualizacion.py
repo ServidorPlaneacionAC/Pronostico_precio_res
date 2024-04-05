@@ -7,14 +7,13 @@ from openpyxl.styles import PatternFill
 class Visualizacion_pronostico_reses:
     def __init__(self) -> None:
         self.dataframe_serie_tiempo=None
+        self.columnas_df=['Año','Semana','Cantidad_Reses','Precio_Planta']
 
     def pantalla_principal(self) -> None:
         st.title("Pronóstico de reses")
-        self.generacion_df_muestra(['Periodo','Cantidad_Reses','Precio_Planta'])
+        self.generacion_df_muestra(self.columnas_df)
         self.habilitar_carga_datos()
-        if self.dataframe_serie_tiempo is not None:
-            trans=transformacion(self.dataframe_serie_tiempo)
-            trans.combinar_partidas_reses()
+        self.transformar_datos()
 
     def generacion_df_muestra(self,lista_claves) -> None:
         diccionario = {}
@@ -32,3 +31,12 @@ class Visualizacion_pronostico_reses:
         data_file = st.file_uploader("Cargar información XLSX", type=["XLSX"]) 
         if data_file is not None:
             self.dataframe_serie_tiempo=pd.read_excel(data_file)
+
+    def transformar_datos(self) -> None:
+        if self.dataframe_serie_tiempo is not None:
+            if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df):
+                trans=transformacion(self.dataframe_serie_tiempo)
+                trans.combinar_partidas_reses()
+            else:
+                st.error('El formato del archivo cargado no coincide con el esperado')
+
