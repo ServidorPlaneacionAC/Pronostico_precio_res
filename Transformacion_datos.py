@@ -32,7 +32,7 @@ class transformacion:
         st.set_option('deprecation.showPyplotGlobalUse', False)
 
         pronostico, intervalo_confianza = self.modelo_arima.predict(n_periods=periodos_predecir, return_conf_int=True)
-        fecha_inicio = self.df.index[-1] + pd.Timedelta(weeks=1)  # Sumar una semana a la última fecha en tus datos
+        fecha_inicio = self.df.index[-1] #+ pd.Timedelta(weeks=1)  # Sumar una semana a la última fecha en tus datos
         # proximo_periodo = pd.date_range(start=self.df.index[-1], periods=periodos_predecir)
         proximo_periodo = pd.date_range(start=fecha_inicio, periods=periodos_predecir, freq='W')
 
