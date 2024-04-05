@@ -37,6 +37,8 @@ class Visualizacion_pronostico_reses:
             if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df):
                 trans=transformacion(self.dataframe_serie_tiempo)
                 trans.combinar_partidas_reses()
+                trans.generar_modelo()
+                
             else:
                 st.error('El formato del archivo cargado no coincide con el esperado')
 
