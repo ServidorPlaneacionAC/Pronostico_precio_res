@@ -6,13 +6,34 @@ from pmdarima import auto_arima
 import matplotlib.pyplot as plt
 
 class pronosticar_precio_reses:
+    
     def __init__(self,df) -> None:
+        """
+            Inicializa la clase PronosticarPrecioReses.
+
+            Parámetros:
+            - df (DataFrame): DataFrame que contiene los datos de la serie temporal.
+
+            Variables globales:
+            - df (DataFrame): DataFrame que contiene los datos de la serie temporal.
+            - modelo_arima (modelo): Mejor modelo generador
+            - periodos_predecir (int): Periodos a pronosticar
+            - elementos_mostrar (int): periodos de la serie original a mostrar en la gráfica
+        """
         self.df = df
         self.modelo_arima=None
         self.periodos_predecir=10
         self.elementos_mostrar=10
 
     def combinar_partidas_reses(self) -> None:
+        """
+            Combina las partidas de reses en la serie temporal y calcula el precio final.
+
+            Esta función agrega las partidas de reses para cada período y calcula el precio final 
+            dividiendo el precio total de la planta entre la cantidad total de reses.
+
+            No devuelve nada, pero modifica el DataFrame df.
+        """
         self.df['Periodo']=[datetime.strptime(f"{int(fila['Año'])} {int(fila['Semana'])}-1", "%Y %W-%w") for _, fila in self.df.iterrows()]
         self.df['Precio_Planta']=self.df['Cantidad_Reses']*self.df['Precio_Planta']
         
@@ -26,15 +47,40 @@ class pronosticar_precio_reses:
         self.df = self.df[~self.df.index.duplicated(keep='first')]        
 
     def generar_modelo(self) -> None:
+        """
+            Genera un modelo ARIMA para la serie temporal.
+
+            Utiliza la función auto_arima de la biblioteca pmdarima para generar un modelo ARIMA 
+            automático basado en la serie temporal.
+
+            No devuelve nada, pero asigna el modelo resultante a la variable modelo_arima.
+        """
         serie_tiempo = self.df
         self.modelo_arima = pm.auto_arima(serie_tiempo)
 
-    def generar_pronostico(self) -> None:        
+    def generar_pronostico(self) -> None: 
+        """
+            Genera un pronóstico utilizando el modelo ARIMA.
+
+            Utiliza el modelo ARIMA generado previamente para generar un pronóstico para un número 
+            especificado de períodos.
+
+            No devuelve nada, pero asigna el pronóstico y el intervalo de confianza a las variables 
+            pronostico y intervalo_confianza, respectivamente.
+        """       
         st.set_option('deprecation.showPyplotGlobalUse', False)
         self.pronostico, self.intervalo_confianza = self.modelo_arima.predict(n_periods=self.periodos_predecir, return_conf_int=True)
         self.proximo_periodo = pd.date_range(start=self.df.index[-1], periods=self.periodos_predecir, freq='W')
 
-    def imprimir_pronostico(self) -> None:   
+    def imprimir_pronostico(self) -> None:  
+        """
+            Imprime el pronóstico generado junto con los datos reales.
+
+            Utiliza matplotlib para trazar el pronóstico generado junto con los datos reales en un 
+            gráfico.
+
+            No devuelve nada, pero muestra el gráfico utilizando la función st.pyplot() de Streamlit.
+        """
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
@@ -47,6 +93,14 @@ class pronosticar_precio_reses:
         st.pyplot()
         
     def llevar_pronostico_a_df(self):
+        """
+            Convierte el pronóstico generado a un DataFrame.
+
+            Crea un DataFrame con los períodos y el pronóstico generado.
+
+            Devuelve:
+            - DataFrame: DataFrame con los períodos y el pronóstico.
+        """
         df_resultado=pd.DataFrame({'Periodo':self.proximo_periodo,'Pronóstico':self.pronostico})
         df_resultado=df_resultado.set_index('Periodo')
         return df_resultado
