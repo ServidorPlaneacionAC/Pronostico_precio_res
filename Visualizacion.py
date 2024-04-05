@@ -39,7 +39,8 @@ class Visualizacion_pronostico_reses:
                 trans.combinar_partidas_reses()
                 trans.generar_modelo()
                 periodos_predecir = st.slider("Periodos a pronosticar", 10, trans.df.shape[0], 1)
-                trans.generar_pronostico(periodos_predecir)
+                mostrar_serie_real = st.slider("Periodos a mostrar", 10, trans.df.shape[0], 1)
+                trans.generar_pronostico(periodos_predecir,mostrar_serie_real)
 
             else:
                 st.error('El formato del archivo cargado no coincide con el esperado')
