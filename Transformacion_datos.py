@@ -43,6 +43,6 @@ class transformacion:
 
         # Mostrar la gráfica en Streamlit
         st.pyplot()
-        
+        st.set_option('deprecation.showPyplotGlobalUse', False)
         st.info('El mejor modelo encontrado es')
         st.write(self.modelo_arima.summary())
