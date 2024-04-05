@@ -28,7 +28,7 @@ class transformacion:
         serie_tiempo = self.df
         self.modelo_arima = pm.auto_arima(serie_tiempo)
 
-    def generar_pronostico(self, periodos_predecir=10,elementos_mostrar=self.df.shape[0]):        
+    def generar_pronostico(self, periodos_predecir=10,elementos_mostrar=10]):        
         st.set_option('deprecation.showPyplotGlobalUse', False)
 
         pronostico, intervalo_confianza = self.modelo_arima.predict(n_periods=periodos_predecir, return_conf_int=True)
