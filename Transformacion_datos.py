@@ -28,7 +28,9 @@ class transformacion:
         serie_tiempo = self.df
         self.modelo_arima = pm.auto_arima(serie_tiempo)
 
-    def generar_pronostico(self, periodos_predecir=70):
+    def generar_pronostico(self, periodos_predecir=70):        
+        st.set_option('deprecation.showPyplotGlobalUse', False)
+
         pronostico, intervalo_confianza = self.modelo_arima.predict(n_periods=periodos_predecir, return_conf_int=True)
         proximo_periodo = pd.date_range(start=self.df.index[-1], periods=periodos_predecir)
 
@@ -40,9 +42,10 @@ class transformacion:
         plt.xlabel('Fecha')
         plt.ylabel('Valor')
         plt.legend()
-
-        # Mostrar la gráfica en Streamlit
         st.pyplot()
-        st.set_option('deprecation.showPyplotGlobalUse', False)
+        
+        df2=pd.DataFrame({'Periodo':proximo_periodo,'Pronostico':pronostico})
+        df2=df2.set_index('Periodo')
+
         st.info('El mejor modelo encontrado es')
         st.write(self.modelo_arima.summary())
