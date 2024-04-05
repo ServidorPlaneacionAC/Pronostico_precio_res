@@ -32,7 +32,10 @@ class transformacion:
         st.set_option('deprecation.showPyplotGlobalUse', False)
 
         pronostico, intervalo_confianza = self.modelo_arima.predict(n_periods=periodos_predecir, return_conf_int=True)
-        proximo_periodo = pd.date_range(start=self.df.index[-1], periods=periodos_predecir)
+        fecha_inicio = self.df.index[-1] + pd.Timedelta(weeks=1)  # Sumar una semana a la última fecha en tus datos
+        # proximo_periodo = pd.date_range(start=self.df.index[-1], periods=periodos_predecir)
+        proximo_periodo = pd.date_range(start=fecha_inicio, periods=periodos_predecir, freq='W')
+
 
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index, self.df, label='Datos reales', color='blue')
@@ -44,7 +47,7 @@ class transformacion:
         plt.legend()
         st.pyplot()
         
-        df_resultado=pd.DataFrame({'Periodo':proximo_periodo,'Pronostico':pronostico})
+        df_resultado=pd.DataFrame({'Periodo':proximo_periodo,'Pronóstico':pronostico})
         df_resultado=df_resultado.set_index('Periodo')
         st.write(df_resultado)
 
