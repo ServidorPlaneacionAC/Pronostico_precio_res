@@ -63,39 +63,45 @@ class Visualizacion_pronostico_reses:
                 categorias_ingresadas=self.dataframe_serie_tiempo['Categoria'].unique()
                 st.info(f'Se ha cargado información para las siguientes categorías {categorias_ingresadas}')
                 categoria_seleccionada = st.selectbox('Selecciona una opción:', categorias_ingresadas)
-                trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria_seleccionada])
-                trans.combinar_partidas_reses()
-                trans.generar_modelo()
-                col1, col2 = st.columns(2)
-                with col1:
-                    mostrar_serie_real = st.slider("Periodos a mostrar", 5, trans.df.shape[0], trans.df.shape[0], 1)
-                with col2:
-                    periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
-                trans.periodos_predecir=periodos_predecir
-                trans.elementos_mostrar=mostrar_serie_real     
-                trans.generar_pronostico()
-                trans.imprimir_pronostico()
-                st.write(trans.llevar_pronostico_a_df())
-                st.info('El mejor modelo encontrado es')
-                st.write(trans.modelo_arima.summary())
+                operar_pronostico(categoria=categoria_seleccionada)
+                # trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria_seleccionada])
+                # trans.combinar_partidas_reses()
+                # trans.generar_modelo()
+                # col1, col2 = st.columns(2)
+                # with col1:
+                #     mostrar_serie_real = st.slider("Periodos a mostrar", 5, trans.df.shape[0], trans.df.shape[0], 1)
+                # with col2:
+                #     periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
+                # trans.periodos_predecir=periodos_predecir
+                # trans.elementos_mostrar=mostrar_serie_real     
+                # trans.generar_pronostico()
+                # trans.imprimir_pronostico()
+                # st.write(trans.llevar_pronostico_a_df())
+                # st.info('El mejor modelo encontrado es')
+                # st.write(trans.modelo_arima.summary())
 
             else:
-                if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df):
-                    trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
-                    trans.combinar_partidas_reses()
-                    trans.generar_modelo()
-                    col1, col2 = st.columns(2)
-                    with col1:
-                        mostrar_serie_real = st.slider("Periodos a mostrar", 10, trans.df.shape[0], trans.df.shape[0], 1)
-                    with col2:
-                        periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
-                    trans.periodos_predecir=periodos_predecir
-                    trans.elementos_mostrar=mostrar_serie_real     
-                    trans.generar_pronostico()
-                    trans.imprimir_pronostico()
-                    st.write(trans.llevar_pronostico_a_df())
-                    st.info('El mejor modelo encontrado es')
-                    st.write(trans.modelo_arima.summary())                    
+                if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df):   
+                    operar_pronostico()            
                 else:
                     st.error('El formato del archivo cargado no coincide con el esperado')
 
+    def operar_pronostico(self,categoria=None):
+        if categoria in None:
+            trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
+        else:
+            trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria])    
+        trans.combinar_partidas_reses()
+        trans.generar_modelo()
+        col1, col2 = st.columns(2)
+        with col1:
+            mostrar_serie_real = st.slider("Periodos a mostrar", 10, trans.df.shape[0], trans.df.shape[0], 1)
+        with col2:
+            periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
+        trans.periodos_predecir=periodos_predecir
+        trans.elementos_mostrar=mostrar_serie_real     
+        trans.generar_pronostico()
+        trans.imprimir_pronostico()
+        st.write(trans.llevar_pronostico_a_df())
+        st.info('El mejor modelo encontrado es')
+        st.write(trans.modelo_arima.summary())     
