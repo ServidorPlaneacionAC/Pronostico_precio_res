@@ -23,7 +23,7 @@ class Visualizacion_pronostico_reses:
         '''
         st.title("Pronóstico de reses")
         self.generacion_df_muestra(self.columnas_df)
-        self.generacion_df_muestra(self.columnas_df+['categoria'])
+        self.generacion_df_muestra(self.columnas_df+['Categoria'])
         self.habilitar_carga_datos()
         self.transformar_datos()
 
@@ -59,7 +59,8 @@ class Visualizacion_pronostico_reses:
         - mostrar información del mejor modelo
         '''
         if self.dataframe_serie_tiempo is not None:
-            if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df):
+            if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df['Categoria']):
+                st.info(f'Se ha cargado información para las siguientes categorías {self.dataframe_serie_tiempo['Categoria'].unique()}')
                 trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
                 trans.combinar_partidas_reses()
                 trans.generar_modelo()
@@ -77,5 +78,22 @@ class Visualizacion_pronostico_reses:
                 st.write(trans.modelo_arima.summary())
 
             else:
-                st.error('El formato del archivo cargado no coincide con el esperado')
+                if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df['Categoria']):
+                    trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
+                    trans.combinar_partidas_reses()
+                    trans.generar_modelo()
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        mostrar_serie_real = st.slider("Periodos a mostrar", 10, trans.df.shape[0], trans.df.shape[0], 1)
+                    with col2:
+                        periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
+                    trans.periodos_predecir=periodos_predecir
+                    trans.elementos_mostrar=mostrar_serie_real     
+                    trans.generar_pronostico()
+                    trans.imprimir_pronostico()
+                    st.write(trans.llevar_pronostico_a_df())
+                    st.info('El mejor modelo encontrado es')
+                    st.write(trans.modelo_arima.summary())                    
+                else:
+                    st.error('El formato del archivo cargado no coincide con el esperado')
 
