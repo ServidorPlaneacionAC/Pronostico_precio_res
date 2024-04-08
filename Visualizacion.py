@@ -63,6 +63,7 @@ class Visualizacion_pronostico_reses:
                 categorias_ingresadas=self.dataframe_serie_tiempo['Categoria'].unique()
                 st.info(f'Se ha cargado información para las siguientes categorías {categorias_ingresadas}')
                 categoria_seleccionada = st.selectbox('Selecciona una opción:', categorias_ingresadas)
+                st.info(operar_pronostico)
                 self.operar_pronostico(categoria=categoria_seleccionada)
                 # trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria_seleccionada])
                 # trans.combinar_partidas_reses()
@@ -87,7 +88,7 @@ class Visualizacion_pronostico_reses:
                     st.error('El formato del archivo cargado no coincide con el esperado')
 
     def operar_pronostico(self,categoria=None):
-        if categoria in None:
+        if categoria is None:
             trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
         else:
             trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria])    
