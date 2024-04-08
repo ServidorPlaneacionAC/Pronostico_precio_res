@@ -23,6 +23,7 @@ class Visualizacion_pronostico_reses:
         '''
         st.title("Pronóstico de reses")
         self.generacion_df_muestra(self.columnas_df)
+        self.generacion_df_muestra(self.columnas_df+['categoria'])
         self.habilitar_carga_datos()
         self.transformar_datos()
 
