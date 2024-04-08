@@ -96,7 +96,7 @@ class Visualizacion_pronostico_reses:
         trans.generar_modelo()
         col1, col2 = st.columns(2)
         with col1:
-            mostrar_serie_real = st.slider("Periodos a mostrar", 10, trans.df.shape[0], trans.df.shape[0], 1)
+            mostrar_serie_real = st.slider("Periodos a mostrar", 5, trans.df.shape[0], trans.df.shape[0], 1)
         with col2:
             periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
         trans.periodos_predecir=periodos_predecir
