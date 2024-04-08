@@ -59,7 +59,7 @@ class Visualizacion_pronostico_reses:
         - mostrar información del mejor modelo
         '''
         if self.dataframe_serie_tiempo is not None:
-            if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df['Categoria']):
+            if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df+['Categoria']):
                 categorias_ingresadas=self.dataframe_serie_tiempo['Categoria'].unique()
                 st.info(f'Se ha cargado información para las siguientes categorías {categorias_ingresadas}')
                 trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
