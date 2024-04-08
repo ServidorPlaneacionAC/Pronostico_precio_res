@@ -79,7 +79,7 @@ class Visualizacion_pronostico_reses:
                 st.write(trans.modelo_arima.summary())
 
             else:
-                if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df['Categoria']):
+                if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df):
                     trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
                     trans.combinar_partidas_reses()
                     trans.generar_modelo()
