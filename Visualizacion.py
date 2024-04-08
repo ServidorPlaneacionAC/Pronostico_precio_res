@@ -60,7 +60,8 @@ class Visualizacion_pronostico_reses:
         '''
         if self.dataframe_serie_tiempo is not None:
             if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df['Categoria']):
-                st.info(f'Se ha cargado información para las siguientes categorías {self.dataframe_serie_tiempo['Categoria'].unique()}')
+                categorias_ingresadas=self.dataframe_serie_tiempo['Categoria'].unique()
+                st.info(f'Se ha cargado información para las siguientes categorías {categorias_ingresadas}')
                 trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
                 trans.combinar_partidas_reses()
                 trans.generar_modelo()
