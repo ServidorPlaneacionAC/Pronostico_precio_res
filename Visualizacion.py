@@ -15,6 +15,7 @@ class Visualizacion_pronostico_reses:
         columnas_df: (list) Campos obligatorios para cargar y que funcione, son las columnas de dataframe_serie_tiempo
         '''
         self.dataframe_serie_tiempo=None
+        self.df_regresores=None
         self.columnas_df=['Año','Semana','Cantidad_Reses','Precio_Planta']
 
     def pantalla_principal(self) -> None:
@@ -26,6 +27,7 @@ class Visualizacion_pronostico_reses:
         self.generacion_df_muestra(self.columnas_df+['Categoria'])
         self.generacion_df_muestra(['Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3'])
         self.dataframe_serie_tiempo=self.habilitar_carga_datos("Cargar información XLSX")
+        self.df_regresores=self.habilitar_carga_datos("Cargar regresores")
         self.transformar_datos()
 
     def generacion_df_muestra(self,lista_claves) -> None:
@@ -63,7 +65,7 @@ class Visualizacion_pronostico_reses:
             if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df+['Categoria']):
                 categorias_ingresadas=self.dataframe_serie_tiempo['Categoria'].unique()
                 st.info(f'Se ha cargado información para las siguientes categorías {categorias_ingresadas}')
-                categoria_seleccionada = st.selectbox('Selecciona una opción:', categorias_ingresadas)
+                categoria_seleccionada = st.selectbox('Selecciona una Zona:', categorias_ingresadas)
                 # st.info(operar_pronostico)
                 self.operar_pronostico(categoria=categoria_seleccionada)
             else:
@@ -81,6 +83,7 @@ class Visualizacion_pronostico_reses:
         col1, col2 = st.columns(2)
         with col1:
             mostrar_serie_real = st.slider("Periodos a mostrar", 5, trans.df.shape[0], trans.df.shape[0], 1)
+            trans.seasonal = st.selectbox('Agregar componente estacional:', [True,False])
         with col2:
             periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
         trans.generar_modelo()

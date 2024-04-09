@@ -22,6 +22,8 @@ class pronosticar_precio_reses:
         """
         self.df = df
         self.modelo_arima=None
+        self.seasonal=False
+        self.trend=None
         self.periodos_predecir=10
         self.elementos_mostrar=10
 
@@ -56,7 +58,9 @@ class pronosticar_precio_reses:
             No devuelve nada, pero asigna el modelo resultante a la variable modelo_arima.
         """
         serie_tiempo = self.df
-        self.modelo_arima = pm.auto_arima(serie_tiempo)
+        self.modelo_arima = pm.auto_arima(serie_tiempo
+                                            ,seasonal=self.seasonal
+                                            ,trend=self.trend)
 
     def generar_pronostico(self) -> None: 
         """
