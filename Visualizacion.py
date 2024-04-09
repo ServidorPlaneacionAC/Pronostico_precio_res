@@ -24,7 +24,7 @@ class Visualizacion_pronostico_reses:
         st.title("Pronóstico de reses")
         self.generacion_df_muestra(self.columnas_df)
         self.generacion_df_muestra(self.columnas_df+['Categoria'])
-        self.generacion_df_muestra('Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3')
+        self.generacion_df_muestra(['Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3'])
         self.dataframe_serie_tiempo=self.habilitar_carga_datos("Cargar información XLSX")
         self.transformar_datos()
 
