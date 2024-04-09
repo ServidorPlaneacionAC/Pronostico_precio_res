@@ -40,7 +40,7 @@ class Visualizacion_pronostico_reses:
         df.set_index(df.columns[0], inplace=True)
         st.write(df)
     
-    def habilitar_carga_datos(self,mensaje) -> DataFrame:
+    def habilitar_carga_datos(self,mensaje):
         '''
         Habilita el boton de carga de archivos y retorna un df con la información del archivo cargado
         '''
