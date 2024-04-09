@@ -24,7 +24,8 @@ class Visualizacion_pronostico_reses:
         st.title("Pronóstico de reses")
         self.generacion_df_muestra(self.columnas_df)
         self.generacion_df_muestra(self.columnas_df+['Categoria'])
-        self.habilitar_carga_datos()
+        self.generacion_df_muestra('Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3')
+        self.dataframe_serie_tiempo=self.habilitar_carga_datos("Cargar información XLSX")
         self.transformar_datos()
 
     def generacion_df_muestra(self,lista_claves) -> None:
@@ -39,13 +40,13 @@ class Visualizacion_pronostico_reses:
         df.set_index(df.columns[0], inplace=True)
         st.write(df)
     
-    def habilitar_carga_datos(self) -> None:
+    def habilitar_carga_datos(self,mensaje) -> DataFrame:
         '''
-        Habilita el boton de carga de archivos e inicializa la variable global dataframe_serie_tiempo
+        Habilita el boton de carga de archivos y retorna un df con la información del archivo cargado
         '''
-        data_file = st.file_uploader("Cargar información XLSX", type=["XLSX"]) 
+        data_file = st.file_uploader(mensaje, type=["XLSX"]) 
         if data_file is not None:
-            self.dataframe_serie_tiempo=pd.read_excel(data_file)
+            return pd.read_excel(data_file)
 
     def transformar_datos(self) -> None:
         '''
@@ -65,22 +66,6 @@ class Visualizacion_pronostico_reses:
                 categoria_seleccionada = st.selectbox('Selecciona una opción:', categorias_ingresadas)
                 # st.info(operar_pronostico)
                 self.operar_pronostico(categoria=categoria_seleccionada)
-                # trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria_seleccionada])
-                # trans.combinar_partidas_reses()
-                # trans.generar_modelo()
-                # col1, col2 = st.columns(2)
-                # with col1:
-                #     mostrar_serie_real = st.slider("Periodos a mostrar", 5, trans.df.shape[0], trans.df.shape[0], 1)
-                # with col2:
-                #     periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
-                # trans.periodos_predecir=periodos_predecir
-                # trans.elementos_mostrar=mostrar_serie_real     
-                # trans.generar_pronostico()
-                # trans.imprimir_pronostico()
-                # st.write(trans.llevar_pronostico_a_df())
-                # st.info('El mejor modelo encontrado es')
-                # st.write(trans.modelo_arima.summary())
-
             else:
                 if all(col in self.dataframe_serie_tiempo.columns for col in self.columnas_df):   
                     self.operar_pronostico()            
@@ -88,17 +73,17 @@ class Visualizacion_pronostico_reses:
                     st.error('El formato del archivo cargado no coincide con el esperado')
 
     def operar_pronostico(self,categoria=None):
+        col1, col2 = st.columns(2)
+        with col1:
+            mostrar_serie_real = st.slider("Periodos a mostrar", 5, trans.df.shape[0], trans.df.shape[0], 1)
+        with col2:
+            periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
         if categoria is None:
             trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
         else:
             trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria])    
         trans.combinar_partidas_reses()
         trans.generar_modelo()
-        col1, col2 = st.columns(2)
-        with col1:
-            mostrar_serie_real = st.slider("Periodos a mostrar", 5, trans.df.shape[0], trans.df.shape[0], 1)
-        with col2:
-            periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
         trans.periodos_predecir=periodos_predecir
         trans.elementos_mostrar=mostrar_serie_real     
         trans.generar_pronostico()
