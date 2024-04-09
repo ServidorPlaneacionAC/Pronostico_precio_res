@@ -72,7 +72,8 @@ class Visualizacion_pronostico_reses:
                 else:
                     st.error('El formato del archivo cargado no coincide con el esperado')
 
-    def operar_pronostico(self,categoria=None):if categoria is None:
+    def operar_pronostico(self,categoria=None):
+        if categoria is None:
             trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
         else:
             trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria])     
