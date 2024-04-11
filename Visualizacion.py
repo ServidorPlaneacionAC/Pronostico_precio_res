@@ -25,12 +25,12 @@ class Visualizacion_pronostico_reses:
         '''
         st.title("Pronóstico de reses")
         self.dataframe_serie_tiempo=self.habilitar_carga_datos("Cargar información XLSX")
-        self.df_regresores=self.habilitar_carga_datos("Cargar regresores")
+        # self.df_regresores=self.habilitar_carga_datos("Cargar regresores")
         self.transformar_datos()
 
     def mostrar_navegabilidad(self):
         st.sidebar.header("Navegación")
-        page = st.sidebar.radio("Ir a:", ["Inicio", "Archivos de muestra"])
+        page = st.sidebar.radio("Ir a:", ["Inicio", "Archivos de muestra","¿Cómo funciona?"])
 
         if page == "Inicio":
             self.pantalla_principal()
@@ -38,7 +38,26 @@ class Visualizacion_pronostico_reses:
             st.title("Archivos de muestra")            
             self.generacion_df_muestra(self.columnas_df)
             self.generacion_df_muestra(self.columnas_df+['Categoria'])
-            self.generacion_df_muestra(['Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3'])
+            # self.generacion_df_muestra(['Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3'])
+        elif page=="¿Cómo funciona?":
+            st.title("¿Cómo funciona?") 
+            st.subtitle('Carga de datos')
+            st.write('''Para generar un pronóstico es necesario suministrar información 
+                     que sirva de soporte para los nuevos datos a generar, en este caso es necesario 
+                     cargar la historia semana a semana de las reses negociadas y su precio, el formato 
+                     establecido está indicado en el segmento "Archivos de muestra", allí se muestran
+                      algunas tablas que se pueden descargar como formato csv, los titulos deben ser respetados
+                      y la información que se cargue debe estar revisada para generar un pronóstico aceptable, 
+                      una vez se descarguen los archivos de muestra, se llenan con la información correspondiente,
+                      se guardan como archvos "xlsx" y se cargan en los botones habilitados en el segmento "Inicio" ''')
+            
+            st.subtitle('¿Qué hay detrás?')
+            st.write('''Cuando se cargan los datos, la herramienta genera el mejor modelo de serie de tiempo 
+                     que se puede ajustar a los datos cargados, genera el prónostico y lo grafica con un intervalo de
+                     confianza del 95%, se puede mover algunos parametros como la cantidad de datos a ver de la serie real
+                     y la cantidad de datos a pronosticar; el modelo generado tambien puede ser modificado, agregandole un componente
+                     estacional o un atributo de tendencia ''')
+            
 
     def generacion_df_muestra(self,lista_claves) -> None:
         '''
