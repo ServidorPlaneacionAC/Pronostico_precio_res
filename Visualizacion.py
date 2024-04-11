@@ -35,8 +35,10 @@ class Visualizacion_pronostico_reses:
         if page == "Inicio":
             self.pantalla_principal()
         elif page == "Archivos de muestra":
-            st.title("Archivos de muestra")            
+            st.title("Archivos de muestra")  
+            st.write('Cargar datos de una zona en específica')          
             self.generacion_df_muestra(self.columnas_df)
+            st.write('Cargar datos de una diferentes zonas indicando en la columna categoría la zona correspondiente')    
             self.generacion_df_muestra(self.columnas_df+['Categoria'])
             # self.generacion_df_muestra(['Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3'])
         elif page=="¿Cómo funciona?":
