@@ -60,7 +60,28 @@ class Visualizacion_pronostico_reses:
                      que se puede ajustar a los datos cargados, genera el prónostico y lo grafica con un intervalo de
                      confianza del 95%, se puede mover algunos parametros como la cantidad de datos a ver de la serie real
                      y la cantidad de datos a pronosticar; el modelo generado tambien puede ser modificado, agregandole un componente
-                     estacional o un atributo de tendencia ''')
+                     estacional o un atributo de tendencia.
+                     
+                     Siendo un poco mas técnicos, Cuando se habla del "mejor modelo" en el contexto de esta función, 
+                     se refiere al modelo que mejor se ajusta a los datos de la serie temporal proporcionada. 
+                     Esto significa que el modelo seleccionado tiene la capacidad de hacer predicciones precisas 
+                     para valores futuros basados en el patrón histórico de los datos. El proceso de encontrar el 
+                     "mejor modelo" generalmente implica probar y comparar diferentes combinaciones de parámetros 
+                     del modelo (como el orden AR, el orden de diferenciación, el orden MA, etc.) y seleccionar 
+                     aquel que minimiza una métrica de evaluación, como el error cuadrático medio (MSE) o el 
+                     criterio de información bayesiana (BIC) - Usado actualmente - 
+                     
+                     Al ser una función de ajuste automático, puede generar varios tipos de modelos, algunos de los cuales son:
+                        ARIMA (Autoregressive Integrated Moving Average): Un modelo que combina componentes autoregresivas, de media móvil y de diferenciación para capturar la estructura de la serie temporal.
+                        SARIMA (Seasonal ARIMA): Similar a ARIMA, pero con la capacidad de modelar patrones estacionales en los datos.
+                        SARIMAX (Seasonal ARIMA with exogenous variables): Una extensión de SARIMA que permite incluir variables exógenas que pueden influir en la serie temporal.
+                        ARIMAX (ARIMA with exogenous variables): Similar a SARIMAX pero sin componente estacional.
+
+                     Cada uno de estos modelos tiene sus propias características y puede ser útil en diferentes 
+                     situaciones dependiendo de la naturaleza de los datos y los patrones que se intenten capturar. La función usada 
+                     ayuda a identificar el modelo óptimo entre estas opciones, teniendo en cuenta la complejidad de los datos y la 
+                     precisión de las predicciones.  
+                     ''')
             
             st.subheader('Soporte')
             st.write('''Este desarrollo fue generado por el equipo de modelación del negocio cárnico, si hay algún
