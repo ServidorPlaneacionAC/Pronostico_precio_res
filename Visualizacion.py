@@ -41,7 +41,7 @@ class Visualizacion_pronostico_reses:
             # self.generacion_df_muestra(['Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3'])
         elif page=="¿Cómo funciona?":
             st.title("¿Cómo funciona?") 
-            st.subtitle('Carga de datos')
+            st.subheader('Carga de datos')
             st.write('''Para generar un pronóstico es necesario suministrar información 
                      que sirva de soporte para los nuevos datos a generar, en este caso es necesario 
                      cargar la historia semana a semana de las reses negociadas y su precio, el formato 
@@ -51,7 +51,7 @@ class Visualizacion_pronostico_reses:
                       una vez se descarguen los archivos de muestra, se llenan con la información correspondiente,
                       se guardan como archvos "xlsx" y se cargan en los botones habilitados en el segmento "Inicio" ''')
             
-            st.subtitle('¿Qué hay detrás?')
+            st.subheader('¿Qué hay detrás?')
             st.write('''Cuando se cargan los datos, la herramienta genera el mejor modelo de serie de tiempo 
                      que se puede ajustar a los datos cargados, genera el prónostico y lo grafica con un intervalo de
                      confianza del 95%, se puede mover algunos parametros como la cantidad de datos a ver de la serie real
