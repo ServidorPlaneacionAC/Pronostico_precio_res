@@ -67,7 +67,7 @@ class Visualizacion_pronostico_reses:
                      requerimiento, duda o comentario sobre el mismo puede ser a través del líder del equipo
                      Lucas Ramirez, así mismo si se tiene alguna necesidad de desarrollo similar al presente puede
                      comunicarlo con la misma persona o a través del siguente enlace  ''')
-            st.markdown('[Formulario de soporte equipo modelación negocio cárnico]https://docs.google.com/forms/d/e/1FAIpQLSfNVT7yFcuaWHvZ_V-wNlu02tPVvbCNA6nA0I1Bhcj5D4MRkQ/viewform')
+            st.markdown('Formulario de soporte equipo modelación negocio cárnico https://docs.google.com/forms/d/e/1FAIpQLSfNVT7yFcuaWHvZ_V-wNlu02tPVvbCNA6nA0I1Bhcj5D4MRkQ/viewform')
             
 
     def generacion_df_muestra(self,lista_claves) -> None:
