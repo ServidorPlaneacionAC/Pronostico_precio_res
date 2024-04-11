@@ -49,7 +49,11 @@ class Visualizacion_pronostico_reses:
                       algunas tablas que se pueden descargar como formato csv, los titulos deben ser respetados
                       y la información que se cargue debe estar revisada para generar un pronóstico aceptable, 
                       una vez se descarguen los archivos de muestra, se llenan con la información correspondiente,
-                      se guardan como archvos "xlsx" y se cargan en los botones habilitados en el segmento "Inicio" ''')
+                      se guardan como archvos "xlsx" y se cargan en los botones habilitados en el segmento "Inicio". 
+                     Es posible cargar una serie de tiempo con distintas categorias, al hacer esto se generará un modelo
+                     y un pronóstico para cada una de ellas.
+                     
+                      ''')
             
             st.subheader('¿Qué hay detrás?')
             st.write('''Cuando se cargan los datos, la herramienta genera el mejor modelo de serie de tiempo 
@@ -57,6 +61,13 @@ class Visualizacion_pronostico_reses:
                      confianza del 95%, se puede mover algunos parametros como la cantidad de datos a ver de la serie real
                      y la cantidad de datos a pronosticar; el modelo generado tambien puede ser modificado, agregandole un componente
                      estacional o un atributo de tendencia ''')
+            
+            st.subheader('Soporte')
+            st.write('''Este desarrollo fue generado por el equipo de modelación del negocio cárnico, si hay algún
+                     requerimiento, duda o comentario sobre el mismo puede ser a través del líder del equipo
+                     Lucas Ramirez, así mismo si se tiene alguna necesidad de desarrollo similar al presente puede
+                     comunicarlo con la misma persona o a través del siguente enlace  ''')
+            st.markdown('[Formulario de soporte equipo modelación negocio cárnico]https://docs.google.com/forms/d/e/1FAIpQLSfNVT7yFcuaWHvZ_V-wNlu02tPVvbCNA6nA0I1Bhcj5D4MRkQ/viewform')
             
 
     def generacion_df_muestra(self,lista_claves) -> None:
