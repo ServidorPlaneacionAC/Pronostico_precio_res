@@ -23,12 +23,21 @@ class Visualizacion_pronostico_reses:
         Genera la pantalla principal, habilita la impresión del df de muestra, carga y trasnformación de datos
         '''
         st.title("Pronóstico de reses")
-        self.generacion_df_muestra(self.columnas_df)
-        self.generacion_df_muestra(self.columnas_df+['Categoria'])
-        self.generacion_df_muestra(['Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3'])
         self.dataframe_serie_tiempo=self.habilitar_carga_datos("Cargar información XLSX")
         self.df_regresores=self.habilitar_carga_datos("Cargar regresores")
         self.transformar_datos()
+
+    def mostrar_navegabilidad(self):
+        st.sidebar.header("Navegación")
+        page = st.sidebar.radio("Ir a:", ["Inicio", "Archivos de muestra"])
+
+        if page == "Inicio":
+            self.pantalla_principal()
+        elif page == "Archivos de muestra":
+            st.title("Archivos de muestra")            
+            self.generacion_df_muestra(self.columnas_df)
+            self.generacion_df_muestra(self.columnas_df+['Categoria'])
+            self.generacion_df_muestra(['Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3'])
 
     def generacion_df_muestra(self,lista_claves) -> None:
         '''
@@ -37,11 +46,11 @@ class Visualizacion_pronostico_reses:
         '''
         diccionario = {}        
         for clave in lista_claves:
-            diccionario[clave] = ''            
+            diccionario[clave] = ''           
         df=pd.DataFrame([diccionario])
         df.set_index(df.columns[0], inplace=True)
         st.write(df)
-    
+     
     def habilitar_carga_datos(self,mensaje):
         '''
         Habilita el boton de carga de archivos y retorna un df con la información del archivo cargado
