@@ -17,6 +17,7 @@ class Visualizacion_pronostico_reses:
         self.dataframe_serie_tiempo=None
         self.df_regresores=None
         self.columnas_df=['Año','Semana','Cantidad_Reses','Precio_Planta']
+        self.mostrar_navegabilidad()
 
     def pantalla_principal(self) -> None:
         '''
