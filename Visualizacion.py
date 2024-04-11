@@ -72,15 +72,16 @@ class Visualizacion_pronostico_reses:
                      criterio de información bayesiana (BIC) - Usado actualmente - 
                      
                      Al ser una función de ajuste automático, puede generar varios tipos de modelos, algunos de los cuales son:
-                        ARIMA (Autoregressive Integrated Moving Average): Un modelo que combina componentes autoregresivas, de media móvil y de diferenciación para capturar la estructura de la serie temporal.
-                        SARIMA (Seasonal ARIMA): Similar a ARIMA, pero con la capacidad de modelar patrones estacionales en los datos.
-                        SARIMAX (Seasonal ARIMA with exogenous variables): Una extensión de SARIMA que permite incluir variables exógenas que pueden influir en la serie temporal.
-                        ARIMAX (ARIMA with exogenous variables): Similar a SARIMAX pero sin componente estacional.
+                     ARIMA (Autoregressive Integrated Moving Average): Un modelo que combina componentes autoregresivas, de media móvil y de diferenciación para capturar la estructura de la serie temporal.
+                     SARIMA (Seasonal ARIMA): Similar a ARIMA, pero con la capacidad de modelar patrones estacionales en los datos.
+                     SARIMAX (Seasonal ARIMA with exogenous variables): Una extensión de SARIMA que permite incluir variables exógenas que pueden influir en la serie temporal.
+                     ARIMAX (ARIMA with exogenous variables): Similar a SARIMAX pero sin componente estacional.
 
                      Cada uno de estos modelos tiene sus propias características y puede ser útil en diferentes 
                      situaciones dependiendo de la naturaleza de los datos y los patrones que se intenten capturar. La función usada 
                      ayuda a identificar el modelo óptimo entre estas opciones, teniendo en cuenta la complejidad de los datos y la 
                      precisión de las predicciones.  
+
                      ''')
             
             st.subheader('Soporte')
