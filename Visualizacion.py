@@ -60,8 +60,7 @@ class Visualizacion_pronostico_reses:
                      que se puede ajustar a los datos cargados, genera el prónostico y lo grafica con un intervalo de
                      confianza del 95%, se puede mover algunos parametros como la cantidad de datos a ver de la serie real
                      y la cantidad de datos a pronosticar; el modelo generado tambien puede ser modificado, agregandole un componente
-                     estacional o un atributo de tendencia.
-                     
+                     estacional o un atributo de tendencia.                     
                      Siendo un poco mas técnicos, Cuando se habla del "mejor modelo" en el contexto de esta función, 
                      se refiere al modelo que mejor se ajusta a los datos de la serie temporal proporcionada. 
                      Esto significa que el modelo seleccionado tiene la capacidad de hacer predicciones precisas 
@@ -79,7 +78,6 @@ class Visualizacion_pronostico_reses:
                      situaciones dependiendo de la naturaleza de los datos y los patrones que se intenten capturar. La función usada 
                      ayuda a identificar el modelo óptimo entre estas opciones, teniendo en cuenta la complejidad de los datos y la 
                      precisión de las predicciones.  
-
                      ''')
             
             st.subheader('Soporte')
