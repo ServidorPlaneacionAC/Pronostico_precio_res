@@ -96,7 +96,7 @@ class pronosticar_precio_reses:
         df = pd.DataFrame({'valor': serie}, index=indice_tiempo)
 
         # Aplicamos la descomposición estacional sin especificar el período
-        stl = STL(df['valor'], seasonal=None)
+        stl = STL(df['valor'], seasonal=3)
         result = stl.fit()
 
         # Graficamos los componentes
