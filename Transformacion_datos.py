@@ -114,10 +114,10 @@ class pronosticar_precio_reses:
             st.pyplot()'''
 
             st.write('''El componente de tendencia de una serie de tiempo se refiere a la dirección general en la que cambian los datos a lo largo del tiempo. Es como observar si una serie de tiempo está subiendo, bajando o permaneciendo relativamente constante en el largo plazo, esta puede ser de 4 tipos:''')
-            st.write('''*None:* Quiere decir que nuestra serie no tiene ninguna tendencia ''')
-            st.write('''*Constante (c):*  se refiere a un patrón en los datos que muestra un cambio uniforme en una dirección específica a lo largo del tiempo  ''')
-            st.write('''*t:* Quiere decir que nuestra serie no tiene ninguna tendencia ''')
-            st.write('''*ct:* Quiere decir que nuestra serie no tiene ninguna tendencia ''')
+            st.write('''**None:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
+            st.write('''**Constante (c):**  se refiere a un patrón en los datos que muestra un cambio uniforme en una dirección específica a lo largo del tiempo  ''')
+            st.write('''**t:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
+            st.write('''**ct:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
 
             from statsmodels.tsa.stattools import adfuller, kpss
 
