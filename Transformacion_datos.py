@@ -89,6 +89,8 @@ class pronosticar_precio_reses:
         from statsmodels.tsa.seasonal import STL
         import numpy as np
 
+        st.write(self.df.columns)
+        
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
         np.random.seed(0)
         indice_tiempo = pd.date_range(start='2024-01-01', periods=37, freq='W')
