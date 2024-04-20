@@ -137,6 +137,22 @@ class pronosticar_precio_reses:
         plt.show()
         st.pyplot()
 
+        # Calculamos la tendencia lineal
+        tendencia_coef = np.polyfit(range(len(self.df.index[inicio_serie_real:])), self.df[inicio_serie_real:], 1)
+        tendencia = np.poly1d(tendencia_coef)
+
+        # Graficamos los datos con la línea de tendencia
+        plt.figure(figsize=(12, 6))
+        plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
+        plt.plot(self.proximo_periodo, self.pronostico, label='Pronóstico', color='red')
+        plt.fill_between(self.proximo_periodo, self.intervalo_confianza[:, 0], self.intervalo_confianza[:, 1], color='pink', alpha=0.3)
+        plt.plot(self.df.index[inicio_serie_real:], tendencia(range(len(self.df.index[inicio_serie_real:]))), linestyle='--', color='green', label='Tendencia')
+        plt.title('Comparación de pronóstico vs. datos reales')
+        plt.xlabel('Fecha')
+        plt.ylabel('Valor')
+        plt.legend()
+        st.pyplot()
+
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
         plt.plot(self.proximo_periodo, self.pronostico, label='Pronóstico', color='red')
