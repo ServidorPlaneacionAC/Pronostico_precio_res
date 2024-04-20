@@ -91,21 +91,17 @@ class pronosticar_precio_reses:
 
         
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
-        if st.button('Ver ACF de mis datos'):
-            acf = sm.tsa.acf(self.df['Precio_final'], nlags=len(self.df)-1)
-            # Graficamos el ACF
-            plt.figure(figsize=(10, 6))
-            plt.stem(acf)
-            plt.xlabel('Lag')
-            plt.ylabel('Autocorrelación')
-            plt.title('Gráfico de Autocorrelación (ACF)')
-            plt.show()
-            st.pyplot()
-            st.write('''Si ves picos en los retrasos múltiplos de un cierto número (por ejemplo, picos en los lags 7, 14, 21, etc., para datos semanales), esto sugiere la presencia de estacionalidad en ese intervalo de tiempo. Por ejemplo, en datos semanales, un pico en el lag 7 podría indicar estacionalidad semanal.''')
-
-        if st.button('Ver gráfico de diferenciación de mis datos'):
+        explicacion=None
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button('Ver ACF de mis datos'):
+                explicacion='ACF'
+        
+        with col2:
+            if st.button('Ver gráfico de diferenciación de mis datos'):
+                explicacion='gráfico de diferenciación'
+        if explicacion=='gráfico de diferenciación':
             diferencias = self.df['Precio_final'].diff()
-
             # Graficamos las diferencias
             plt.figure(figsize=(10, 6))
             plt.plot(self.df.index, diferencias, marker='o', linestyle='-')
@@ -116,6 +112,17 @@ class pronosticar_precio_reses:
             plt.grid(True)
             plt.show()
             st.pyplot()
+        elif explicacion=='ACF':
+            acf = sm.tsa.acf(self.df['Precio_final'], nlags=len(self.df)-1)
+            # Graficamos el ACF
+            plt.figure(figsize=(10, 6))
+            plt.stem(acf)
+            plt.xlabel('Lag')
+            plt.ylabel('Autocorrelación')
+            plt.title('Gráfico de Autocorrelación (ACF)')
+            plt.show()
+            st.pyplot()
+            st.write('''Si ves picos en los retrasos múltiplos de un cierto número (por ejemplo, picos en los lags 7, 14, 21, etc., para datos semanales), esto sugiere la presencia de estacionalidad en ese intervalo de tiempo. Por ejemplo, en datos semanales, un pico en el lag 7 podría indicar estacionalidad semanal.''')
 
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
