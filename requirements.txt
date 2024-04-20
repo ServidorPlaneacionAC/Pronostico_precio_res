@@ -5,3 +5,4 @@ datetime
 pmdarima
 matplotlib
 statsmodels
+numpy

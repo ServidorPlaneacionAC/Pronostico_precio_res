@@ -87,6 +87,7 @@ class pronosticar_precio_reses:
         """
 
         from statsmodels.tsa.seasonal import STL
+        import numpy as np
 
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
         np.random.seed(0)
