@@ -4,3 +4,4 @@ openpyxl
 datetime
 pmdarima
 matplotlib
+statsmodels
