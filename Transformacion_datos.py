@@ -91,9 +91,9 @@ class pronosticar_precio_reses:
 
 
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
-        
+
         # Aplicamos la descomposición estacional sin especificar el período
-        stl = STL(self.df['Precio_final'], seasonal=3)
+        stl = STL(self.df['Precio_final'], seasonal=4)
         result = stl.fit()
 
         # Graficamos los componentes
