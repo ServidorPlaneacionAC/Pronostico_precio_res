@@ -116,6 +116,7 @@ class pronosticar_precio_reses:
         plt.title('Gráfico de Diferenciación para Identificar Tendencia')
         plt.grid(True)
         plt.show()
+        st.pyplot()
 
 
         plt.figure(figsize=(12, 6))
