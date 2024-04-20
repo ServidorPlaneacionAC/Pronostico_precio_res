@@ -120,7 +120,7 @@ class pronosticar_precio_reses:
 
         plt.tight_layout()
         plt.show()
-
+        st.pyplot()
 
         '''plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
