@@ -90,10 +90,10 @@ class pronosticar_precio_reses:
 
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
 
-        stl = STL(self.df.index[inicio_serie_real:], seasonal=2) 
+        '''stl = STL(self.df.index[inicio_serie_real:], seasonal=2) 
         result = stl.fit()
         fig = result.plot()
-        plt.show()
+        plt.show()'''
 
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
