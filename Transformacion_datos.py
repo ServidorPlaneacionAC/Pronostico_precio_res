@@ -103,20 +103,20 @@ class pronosticar_precio_reses:
         fig, axes = plt.subplots(2, 2, figsize=(10, 8), sharex=True)
 
         # Serie original
-        axes[0].plot(df.index, df['valor'], label='Serie Original', color='blue')
-        axes[0].set_title('Serie Original')
+        axes[0,0].plot(df.index, df['valor'], label='Serie Original', color='blue')
+        axes[0,0].set_title('Serie Original')
 
         # Tendencia
-        axes[1].plot(df.index, result.trend, label='Tendencia', color='green')
-        axes[1].set_title('Tendencia')
+        axes[0,1].plot(df.index, result.trend, label='Tendencia', color='green')
+        axes[0,1].set_title('Tendencia')
 
         # Estacionalidad
-        axes[2].plot(df.index, result.seasonal, label='Estacionalidad', color='red')
-        axes[2].set_title('Estacionalidad')
+        axes[1,1].plot(df.index, result.seasonal, label='Estacionalidad', color='red')
+        axes[1,1].set_title('Estacionalidad')
 
         # Residuo
-        axes[3].plot(df.index, result.resid, label='Residuo', color='purple')
-        axes[3].set_title('Residuo')
+        axes[1,0].plot(df.index, result.resid, label='Residuo', color='purple')
+        axes[1,0].set_title('Residuo')
 
         plt.tight_layout()
         plt.show()
