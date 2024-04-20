@@ -86,8 +86,8 @@ class pronosticar_precio_reses:
             No devuelve nada, pero muestra el gráfico utilizando la función st.pyplot() de Streamlit.
         """
 
-        from statsmodels.tsa.seasonal import STL
-        import numpy as np
+        
+        import statsmodels.api as sm
 
 
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
