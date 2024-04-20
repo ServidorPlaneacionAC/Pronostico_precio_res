@@ -100,7 +100,7 @@ class pronosticar_precio_reses:
         result = stl.fit()
 
         # Graficamos los componentes
-        fig, axes = plt.subplots(4, 1, figsize=(10, 8), sharex=True)
+        fig, axes = plt.subplots(2, 2, figsize=(10, 8), sharex=True)
 
         # Serie original
         axes[0].plot(df.index, df['valor'], label='Serie Original', color='blue')
