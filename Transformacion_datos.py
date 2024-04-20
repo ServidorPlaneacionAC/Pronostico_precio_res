@@ -118,6 +118,23 @@ class pronosticar_precio_reses:
         plt.show()
         st.pyplot()
 
+        np.random.seed(0)
+        indice_tiempo = pd.date_range(start='2024-01-01', periods=100, freq='D')
+        serie = np.linspace(1, 100, 100) + np.random.normal(0, 5, 100)
+        df = pd.DataFrame({'valor': serie}, index=indice_tiempo)
+
+        # Calculamos las diferencias entre puntos de datos sucesivos
+        diferencias = df['valor'].diff()
+
+        # Graficamos las diferencias
+        plt.figure(figsize=(10, 6))
+        plt.plot(df.index, diferencias, marker='o', linestyle='-')
+        plt.axhline(y=0, color='gray', linestyle='--')  # Línea horizontal en y=0 para referencia
+        plt.xlabel('Fecha')
+        plt.ylabel('Diferencia')
+        plt.title('Gráfico de Diferenciación para Identificar Tendencia Lineal')
+        plt.grid(True)
+        plt.show()
 
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
