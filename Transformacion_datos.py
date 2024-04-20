@@ -101,7 +101,7 @@ class pronosticar_precio_reses:
             if st.button('Ver gráfico de diferenciación de mis datos'):
                 explicacion='gráfico de diferenciación'
         if explicacion=='gráfico de diferenciación':
-            diferencias = self.df['Precio_final'].diff()
+            '''diferencias = self.df['Precio_final'].diff()
             # Graficamos las diferencias
             plt.figure(figsize=(10, 6))
             plt.plot(self.df.index, diferencias, marker='o', linestyle='-')
@@ -111,7 +111,30 @@ class pronosticar_precio_reses:
             plt.title('Gráfico de Diferenciación para Identificar Tendencia')
             plt.grid(True)
             plt.show()
-            st.pyplot()
+            st.pyplot()'''
+
+            st.write('''El componente de tendencia de una serie de tiempo se refiere a la dirección general en la que cambian los datos a lo largo del tiempo. Es como observar si una serie de tiempo está subiendo, bajando o permaneciendo relativamente constante en el largo plazo, esta puede ser de 4 tipos:''')
+            st.write('''*None:* Quiere decir que nuestra serie no tiene ninguna tendencia ''')
+            st.write('''*Constante (c):*  se refiere a un patrón en los datos que muestra un cambio uniforme en una dirección específica a lo largo del tiempo  ''')
+            st.write('''*t:* Quiere decir que nuestra serie no tiene ninguna tendencia ''')
+            st.write('''*ct:* Quiere decir que nuestra serie no tiene ninguna tendencia ''')
+
+            from statsmodels.tsa.stattools import adfuller, kpss
+
+            # Aplicar la prueba ADF
+            adf_result = adfuller(self.df['Precio_final'])
+            st.write('Prueba ADF:')
+            st.write('Estadística ADF:', adf_result[0])
+            st.write('Valor p:', adf_result[1])
+            st.write('Valores críticos:', adf_result[4])
+
+            # Aplicar la prueba KPSS
+            kpss_result = kpss(self.df['Precio_final'])
+            st.write('\nPrueba KPSS:')
+            st.write('Estadística KPSS:', kpss_result[0])
+            st.write('Valor p:', kpss_result[1])
+            st.write('Nivel de significancia:', kpss_result[3])
+
         elif explicacion=='ACF':
             acf = sm.tsa.acf(self.df['Precio_final'], nlags=len(self.df)-1)
             # Graficamos el ACF
