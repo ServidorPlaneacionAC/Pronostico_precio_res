@@ -122,8 +122,7 @@ class pronosticar_precio_reses:
             plt.title('Gráfico de Autocorrelación (ACF)')
             plt.show()
             st.pyplot()
-            st.write('''Si ves picos en los retrasos múltiplos de un cierto número (por ejemplo, picos en los lags 7, 14, 21, etc., para datos semanales), esto sugiere la presencia de estacionalidad en ese intervalo de tiempo. Por ejemplo, en datos semanales, un pico en el lag 7 podría indicar estacionalidad semanal.''')
-
+            st.write('''La ACF te ayuda a ver si hay un patrón que se repite en ciertos momentos, como si hubiera un evento especial que ocurre en la misma época cada cierto periodo de tiempo. Si ves picos en ciertos momentos en la ACF, eso podría significar que hay un componente estacional en esos momentos, entonces se recomienda activar el componente estacional con la alternativa TRUE''')
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
         plt.plot(self.proximo_periodo, self.pronostico, label='Pronóstico', color='red')
