@@ -135,6 +135,7 @@ class pronosticar_precio_reses:
         plt.title('Gráfico de Diferenciación para Identificar Tendencia Lineal')
         plt.grid(True)
         plt.show()
+        st.pyplot()
 
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
