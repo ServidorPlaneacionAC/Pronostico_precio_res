@@ -86,7 +86,7 @@ class pronosticar_precio_reses:
             No devuelve nada, pero muestra el gráfico utilizando la función st.pyplot() de Streamlit.
         """
 
-        
+        import numpy as np
         import statsmodels.api as sm
 
 
