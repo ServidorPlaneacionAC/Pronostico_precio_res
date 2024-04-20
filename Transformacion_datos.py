@@ -94,7 +94,7 @@ class pronosticar_precio_reses:
         st.write(self.df.index[:])
         st.write(self.df)
 
-        stl = STL(self.df.iloc[:,0], seasonal=None)  # Puedes ajustar 'seasonal' según la periodicidad esperada de tus datos
+        stl = STL(self.df.iloc[:,0])  # Puedes ajustar 'seasonal' según la periodicidad esperada de tus datos
         result = stl.fit()
 
         fig, axes = plt.subplots(4, 1, figsize=(10, 8), sharex=True)
