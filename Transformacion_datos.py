@@ -90,10 +90,28 @@ class pronosticar_precio_reses:
 
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
 
-        '''stl = STL(self.df.index[inicio_serie_real:], seasonal=2) 
+        stl = STL(self.df.index[inicio_serie_real:], seasonal=12)  # Puedes ajustar 'seasonal' según la periodicidad esperada de tus datos
         result = stl.fit()
-        fig = result.plot()
-        plt.show()'''
+
+        fig, axes = plt.subplots(4, 1, figsize=(10, 8), sharex=True)
+
+        # Serie original
+        axes[0].plot(df.index, df['valor'], label='Serie Original', color='blue')
+        axes[0].set_title('Serie Original')
+
+        # Tendencia
+        axes[1].plot(df.index, result.trend, label='Tendencia', color='green')
+        axes[1].set_title('Tendencia')
+
+        # Estacionalidad
+        axes[2].plot(df.index, result.seasonal, label='Estacionalidad', color='red')
+        axes[2].set_title('Estacionalidad')
+
+        axes[3].plot(df.index, result.resid, label='Residuo', color='purple')
+        axes[3].set_title('Residuo')
+
+        plt.tight_layout()
+        plt.show()
 
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
