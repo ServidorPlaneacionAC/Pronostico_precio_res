@@ -122,7 +122,7 @@ class pronosticar_precio_reses:
         plt.show()
 
 
-        plt.figure(figsize=(12, 6))
+        '''plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
         plt.plot(self.proximo_periodo, self.pronostico, label='Pronóstico', color='red')
         plt.fill_between(self.proximo_periodo, self.intervalo_confianza[:, 0], self.intervalo_confianza[:, 1], color='pink', alpha=0.3)
@@ -130,7 +130,7 @@ class pronosticar_precio_reses:
         plt.xlabel('Fecha')
         plt.ylabel('Valor')
         plt.legend()
-        st.pyplot()
+        st.pyplot()'''
         
     def llevar_pronostico_a_df(self):
         """
