@@ -92,30 +92,14 @@ class pronosticar_precio_reses:
 
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
 
-        # Aplicamos la descomposición estacional sin especificar el período
-        stl = STL(self.df['Precio_final'], seasonal=4)
-        result = stl.fit()
+        acf = sm.tsa.acf(self.df['Precio_final'], nlags=len(self.df)-1)
 
-        # Graficamos los componentes
-        fig, axes = plt.subplots(2, 2, figsize=(10, 8), sharex=True)
-
-        # Serie original
-        axes[0,0].plot(self.df.index, self.df['Precio_final'], label='Serie Original', color='blue')
-        axes[0,0].set_title('Serie Original')
-
-        # Tendencia
-        axes[0,1].plot(self.df.index, result.trend, label='Tendencia', color='green')
-        axes[0,1].set_title('Tendencia')
-
-        # Estacionalidad
-        axes[1,1].plot(self.df.index, result.seasonal, label='Estacionalidad', color='red')
-        axes[1,1].set_title('Estacionalidad')
-
-        # Residuo
-        axes[1,0].plot(self.df.index, result.resid, label='Residuo', color='purple')
-        axes[1,0].set_title('Residuo')
-
-        plt.tight_layout()
+        # Graficamos el ACF
+        plt.figure(figsize=(10, 6))
+        plt.stem(acf)
+        plt.xlabel('Lag')
+        plt.ylabel('Autocorrelación')
+        plt.title('Gráfico de Autocorrelación (ACF)')
         plt.show()
         st.pyplot()
 
