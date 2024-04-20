@@ -89,8 +89,8 @@ class pronosticar_precio_reses:
         from statsmodels.tsa.seasonal import STL
 
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
-        
-        stl = STL(self.df.index[inicio_serie_real:], seasonal=52)  # 'seasonal' es un parámetro que puedes ajustar según la periodicidad que esperas, por ejemplo, 12 para datos mensuales
+
+        stl = STL(self.df.index[inicio_serie_real:], seasonal=4)  # 'seasonal' es un parámetro que puedes ajustar según la periodicidad que esperas, por ejemplo, 12 para datos mensuales
         result = stl.fit()
         fig = result.plot()
         plt.show()
