@@ -103,6 +103,8 @@ class pronosticar_precio_reses:
         plt.show()
         st.pyplot()
 
+        st.write('''Si ves picos en los retrasos múltiplos de un cierto número (por ejemplo, picos en los lags 7, 14, 21, etc., para datos semanales), esto sugiere la presencia de estacionalidad en ese intervalo de tiempo. Por ejemplo, en datos semanales, un pico en el lag 7 podría indicar estacionalidad semanal.''')
+
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
         plt.plot(self.proximo_periodo, self.pronostico, label='Pronóstico', color='red')
