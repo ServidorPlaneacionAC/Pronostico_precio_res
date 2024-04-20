@@ -89,7 +89,7 @@ class pronosticar_precio_reses:
         from statsmodels.tsa.seasonal import STL
 
         inicio_serie_real=self.df.shape[0]-self.elementos_mostrar
-
+'''
         st.write(self.df.iloc[:,0])
         st.write(self.df.index[:])
         st.write(self.df)
@@ -116,6 +116,39 @@ class pronosticar_precio_reses:
 
         plt.tight_layout()
         plt.show()
+'''
+
+        np.random.seed(0)
+        indice_tiempo = pd.date_range(start='2024-01-01', periods=37, freq='W')
+        serie = np.sin(np.linspace(0, 2*np.pi, 37)) + np.random.normal(0, 0.2, 37)
+        df = pd.DataFrame({'valor': serie}, index=indice_tiempo)
+
+        # Aplicamos la descomposición estacional sin especificar el período
+        stl = STL(df['valor'], seasonal=None)
+        result = stl.fit()
+
+        # Graficamos los componentes
+        fig, axes = plt.subplots(4, 1, figsize=(10, 8), sharex=True)
+
+        # Serie original
+        axes[0].plot(df.index, df['valor'], label='Serie Original', color='blue')
+        axes[0].set_title('Serie Original')
+
+        # Tendencia
+        axes[1].plot(df.index, result.trend, label='Tendencia', color='green')
+        axes[1].set_title('Tendencia')
+
+        # Estacionalidad
+        axes[2].plot(df.index, result.seasonal, label='Estacionalidad', color='red')
+        axes[2].set_title('Estacionalidad')
+
+        # Residuo
+        axes[3].plot(df.index, result.resid, label='Residuo', color='purple')
+        axes[3].set_title('Residuo')
+
+        plt.tight_layout()
+        plt.show()
+
 
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
