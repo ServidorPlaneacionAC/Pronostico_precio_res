@@ -136,17 +136,22 @@ class pronosticar_precio_reses:
         plt.grid(True)
         plt.show()
         st.pyplot()
+        
+        datos_reales = self.df[inicio_serie_real:]
 
-        # Calculamos la tendencia lineal
-        tendencia_coef = np.polyfit(range(len(self.df.index[inicio_serie_real:])), self.df[inicio_serie_real:], 1)
+        # Crear un array de índices de tiempo numéricos para la tendencia
+        indice_numerico = np.arange(len(datos_reales))
+
+        # Calcular la tendencia lineal
+        tendencia_coef = np.polyfit(indice_numerico, datos_reales, 1)
         tendencia = np.poly1d(tendencia_coef)
 
-        # Graficamos los datos con la línea de tendencia
+        # Graficar los datos con la línea de tendencia
         plt.figure(figsize=(12, 6))
-        plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
+        plt.plot(self.df.index[inicio_serie_real:], datos_reales, label='Datos reales', color='blue')
         plt.plot(self.proximo_periodo, self.pronostico, label='Pronóstico', color='red')
         plt.fill_between(self.proximo_periodo, self.intervalo_confianza[:, 0], self.intervalo_confianza[:, 1], color='pink', alpha=0.3)
-        plt.plot(self.df.index[inicio_serie_real:], tendencia(range(len(self.df.index[inicio_serie_real:]))), linestyle='--', color='green', label='Tendencia')
+        plt.plot(self.df.index[inicio_serie_real:], tendencia(indice_numerico), linestyle='--', color='green', label='Tendencia')
         plt.title('Comparación de pronóstico vs. datos reales')
         plt.xlabel('Fecha')
         plt.ylabel('Valor')
