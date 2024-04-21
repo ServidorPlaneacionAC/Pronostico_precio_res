@@ -117,13 +117,13 @@ class pronosticar_precio_reses:
             st.write('''**None:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
             st.write('''**Constante (c):** En una tendencia constante, los datos muestran un cambio uniforme en una dirección específica a lo largo del tiempo, este cambio no necesariamente sigue una línea recta, pero crece un valor constante''')
             st.write('''**Lineal (t):** En una tendencia lineal, los datos muestran un cambio permanente en una dirección específica a lo largo del tiempo, y este cambio sigue una razon de crecimiento ''')
-            st.write('''**Constante y lineak(ct):** Usado en movimientos que contienen ambos tipos de tendencia ''')
+            st.write('''**Constante y lineal (ct):** Usado en movimientos que contienen ambos tipos de tendencia ''')
 
             from statsmodels.tsa.stattools import adfuller, kpss
 
             # Aplicar la prueba ADF
             adf_result = adfuller(self.df['Precio_final'])
-            st.write('Al realizar la prueba estadistica Prueba de Dickey-Fuller Aumentada (ADF) obtenemos un valor-p de {adf_result[1]}')
+            st.write(f'Al realizar la prueba estadistica Prueba de Dickey-Fuller Aumentada (ADF) obtenemos un valor-p de {adf_result[1]}')
             if adf_result[1]<0.05:
                 st.info('La serie no tiene tendencia se sugiere no agregar componente estacional')
             else:
