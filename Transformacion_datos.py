@@ -115,25 +115,20 @@ class pronosticar_precio_reses:
 
             st.write('''El componente de tendencia de una serie de tiempo se refiere a la dirección general en la que cambian los datos a lo largo del tiempo. Es como observar si una serie de tiempo está subiendo, bajando o permaneciendo relativamente constante en el largo plazo, esta puede ser de 4 tipos:''')
             st.write('''**None:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
-            st.write('''**Constante (c):**  se refiere a un patrón en los datos que muestra un cambio uniforme en una dirección específica a lo largo del tiempo  ''')
-            st.write('''**t:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
-            st.write('''**ct:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
+            st.write('''**Constante (c):** En una tendencia constante, los datos muestran un cambio uniforme en una dirección específica a lo largo del tiempo, este cambio no necesariamente sigue una línea recta, pero crece un valor constante''')
+            st.write('''**t:**En una tendencia lineal, los datos muestran un cambio permanente en una dirección específica a lo largo del tiempo, y este cambio sigue una razon de crecimiento ''')
+            st.write('''**ct:** Usado en movimientos que contienen ambos tipos de tendencia ''')
 
             from statsmodels.tsa.stattools import adfuller, kpss
 
             # Aplicar la prueba ADF
             adf_result = adfuller(self.df['Precio_final'])
-            st.write('Prueba ADF:')
-            st.write('Estadística ADF:', adf_result[0])
-            st.write('Valor p:', adf_result[1])
-            st.write('Valores críticos:', adf_result[4])
-
-            # Aplicar la prueba KPSS
-            kpss_result = kpss(self.df['Precio_final'])
-            st.write('\nPrueba KPSS:')
-            st.write('Estadística KPSS:', kpss_result[0])
-            st.write('Valor p:', kpss_result[1])
-            st.write('Nivel de significancia:', kpss_result[3])
+            st.write('Al realizar la prueba estadistica Prueba de Dickey-Fuller Aumentada (ADF) obtenemos un valor-p de {adf_result[1]}')
+            if adf_result[1]<0.05:
+                st.info('La serie no tiene tendencia se sugiere no agregar componente estacional')
+            else:
+                st.info('La serie si tiene tendencia se sugiere evaluar el componente estacional que mas se ajuste')
+            
 
         elif explicacion=='ACF':
             acf = sm.tsa.acf(self.df['Precio_final'], nlags=len(self.df)-1)
