@@ -130,6 +130,7 @@ class pronosticar_precio_reses:
             plt.show()
             st.pyplot()
             st.write('''La ACF te ayuda a ver si hay un patrón que se repite en ciertos momentos, como si hubiera un evento especial que ocurre en la misma época cada cierto periodo de tiempo. Si ves picos en ciertos momentos en la ACF, eso podría significar que hay un componente estacional en esos momentos, entonces se recomienda activar el componente estacional con la alternativa TRUE''')
+        
         plt.figure(figsize=(12, 6))
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
         plt.plot(self.proximo_periodo, self.pronostico, label='Pronóstico', color='red')
