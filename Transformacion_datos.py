@@ -94,11 +94,11 @@ class pronosticar_precio_reses:
         explicacion=None
         col1, col2 = st.columns(2)
         with col1:
-            if st.button('Ver ACF de mis datos'):
+            if st.button('Ver ayuda sobre componente estacional'):
                 explicacion='ACF'
         
         with col2:
-            if st.button('Ver gráfico de diferenciación de mis datos'):
+            if st.button('Ver ayuda sobre componente de tendencia'):
                 explicacion='gráfico de diferenciación'
         if explicacion=='gráfico de diferenciación':
 
