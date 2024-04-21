@@ -116,7 +116,7 @@ class pronosticar_precio_reses:
             st.write('''El componente de tendencia de una serie de tiempo se refiere a la dirección general en la que cambian los datos a lo largo del tiempo. Es como observar si una serie de tiempo está subiendo, bajando o permaneciendo relativamente constante en el largo plazo, esta puede ser de 4 tipos:''')
             st.write('''**None:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
             st.write('''**Constante (c):** En una tendencia constante, los datos muestran un cambio uniforme en una dirección específica a lo largo del tiempo, este cambio no necesariamente sigue una línea recta, pero crece un valor constante''')
-            st.write('''**Lineal (t):**En una tendencia lineal, los datos muestran un cambio permanente en una dirección específica a lo largo del tiempo, y este cambio sigue una razon de crecimiento ''')
+            st.write('''**Lineal (t):** En una tendencia lineal, los datos muestran un cambio permanente en una dirección específica a lo largo del tiempo, y este cambio sigue una razon de crecimiento ''')
             st.write('''**Constante y lineak(ct):** Usado en movimientos que contienen ambos tipos de tendencia ''')
 
             from statsmodels.tsa.stattools import adfuller, kpss
