@@ -127,7 +127,7 @@ class pronosticar_precio_reses:
             if adf_result[1]<0.05:
                 st.write('**La serie no tiene tendencia se sugiere no agregar componente estacional**')
             else:
-                st.write('**La serie si tiene tendencia se sugiere evaluar el componente estacional que mas se ajuste**')
+                st.write('**La serie si tiene tendencia se sugiere evaluar el componente estacional que mas se ajuste según las definiciones anteriores**')
             
 
         elif explicacion=='ACF':
