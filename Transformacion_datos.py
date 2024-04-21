@@ -123,11 +123,11 @@ class pronosticar_precio_reses:
 
             # Aplicar la prueba ADF
             adf_result = adfuller(self.df['Precio_final'])
-            st.write(f'Al realizar la prueba estadistica Prueba de Dickey-Fuller Aumentada (ADF) obtenemos un valor-p de {adf_result[1]}')
+            st.write(f'Al realizar la prueba estadistica Prueba de Dickey-Fuller Aumentada (ADF) obtenemos un valor-p de {adf_result[1]}, concluyendo:')
             if adf_result[1]<0.05:
-                st.info('La serie no tiene tendencia se sugiere no agregar componente estacional')
+                st.write('**La serie no tiene tendencia se sugiere no agregar componente estacional**')
             else:
-                st.info('La serie si tiene tendencia se sugiere evaluar el componente estacional que mas se ajuste')
+                st.write('**La serie si tiene tendencia se sugiere evaluar el componente estacional que mas se ajuste**')
             
 
         elif explicacion=='ACF':
