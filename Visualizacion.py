@@ -142,7 +142,7 @@ class Visualizacion_pronostico_reses:
             trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
         else:
             trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria])     
-        self.trans.combinar_partidas_reses()
+        trans.combinar_partidas_reses()
         
         periodos_muestra = st.slider("Periodos de muestra", 5, trans.df.shape[0], trans.df.shape[0], 1)
         col1, col2 = st.columns(2)
