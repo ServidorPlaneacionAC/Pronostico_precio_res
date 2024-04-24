@@ -17,6 +17,7 @@ class Visualizacion_pronostico_reses:
         self.dataframe_serie_tiempo=None
         self.df_regresores=None
         self.columnas_df=['Año','Semana','Cantidad_Reses','Precio_Planta']
+        self.trans=None
         self.mostrar_navegabilidad()
 
     def pantalla_principal(self) -> None:
@@ -89,7 +90,6 @@ class Visualizacion_pronostico_reses:
                      Lucas Ramirez, así mismo si se tiene alguna necesidad de desarrollo similar al presente puede
                      comunicarlo con la misma persona o a través del siguente enlace  ''')
             st.markdown('Formulario de soporte equipo modelación negocio cárnico https://docs.google.com/forms/d/e/1FAIpQLSfNVT7yFcuaWHvZ_V-wNlu02tPVvbCNA6nA0I1Bhcj5D4MRkQ/viewform')
-            
 
     def generacion_df_muestra(self,lista_claves) -> None:
         '''
@@ -137,22 +137,71 @@ class Visualizacion_pronostico_reses:
 
     def operar_pronostico(self,categoria=None):
         if categoria is None:
-            trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
+            self.trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
         else:
-            trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria])     
-        trans.combinar_partidas_reses()
+            self.trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria])     
+        self.trans.combinar_partidas_reses()
+        
+        periodos_muestra = st.slider("Periodos de muestra", 5, self.trans.df.shape[0], self.trans.df.shape[0], 1)
         col1, col2 = st.columns(2)
         with col1:
-            mostrar_serie_real = st.slider("Periodos a mostrar", 5, trans.df.shape[0], trans.df.shape[0], 1)
-            trans.seasonal = st.selectbox('Agregar componente estacional:', [True,False])
+            mostrar_serie_real = st.slider("Periodos a mostrar", 5, self.trans.df.shape[0], self.trans.df.shape[0], 1)
+            self.trans.seasonal = st.selectbox('Agregar componente estacional:', [True,False])
         with col2:
-            periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
-            trans.trend = st.selectbox('Agregar componente de tendencia:', [None,'c','t','ct'])
-        trans.generar_modelo()
-        trans.periodos_predecir=periodos_predecir
-        trans.elementos_mostrar=mostrar_serie_real     
-        trans.generar_pronostico()
-        trans.imprimir_pronostico()
-        st.write(trans.llevar_pronostico_a_df())
+            periodos_predecir = st.slider("Periodos a pronosticar", 1, self.trans.df.shape[0],10, 1)
+            self.trans.trend = st.selectbox('Agregar componente de tendencia:', [None,'c','t','ct'])
+        self.trans.generar_modelo()
+        self.trans.periodos_predecir=periodos_predecir
+        self.trans.elementos_mostrar=mostrar_serie_real     
+        self.trans.generar_pronostico()
+        self.trans.imprimir_pronostico()
+        st.write(self.trans.llevar_pronostico_a_df())
         st.info('El mejor modelo encontrado es')
-        st.write(trans.modelo_arima.summary())     
+        st.write(self.trans.modelo_arima.summary())     
+
+    def mostrar_explicacion_variables(self):
+        '''
+        Genera 2 botones para sugerir como relacionarse con los parametros en el autoarima 
+        para modificar el modelo generado
+        '''
+        explicacion=None
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button('Ver ayuda sobre componente estacional'):
+                explicacion='ACF'
+        
+        with col2:
+            if st.button('Ver ayuda sobre componente de tendencia'):
+                explicacion='gráfico de diferenciación'
+        
+        if explicacion=='gráfico de diferenciación':
+
+            st.write('''El componente de tendencia de una serie de tiempo se refiere a la dirección general en la que cambian los datos a lo largo del tiempo. Es como observar si una serie de tiempo está subiendo, bajando o permaneciendo relativamente constante en el largo plazo, esta puede ser de 4 tipos:''')
+            st.write('''**None:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
+            st.write('''**Constante (c):** En una tendencia constante, los datos muestran un cambio uniforme en una dirección específica a lo largo del tiempo, este cambio no necesariamente sigue una línea recta, pero crece un valor constante''')
+            st.write('''**Lineal (t):** En una tendencia lineal, los datos muestran un cambio permanente en una dirección específica a lo largo del tiempo, y este cambio sigue una razon de crecimiento ''')
+            st.write('''**Constante y lineal (ct):** Usado en movimientos que contienen ambos tipos de tendencia ''')
+
+            from statsmodels.tsa.stattools import adfuller, kpss
+
+            # Aplicar la prueba ADF
+            adf_result = adfuller(self.trans.df['Precio_final'])
+            st.write(f'Al realizar la prueba estadistica Prueba de Dickey-Fuller Aumentada (ADF) obtenemos un valor-p de {adf_result[1]}, concluyendo:')
+            if adf_result[1]<0.05:
+                st.write('**La serie no tiene tendencia se sugiere no agregar componente estacional**')
+            else:
+                st.write('**La serie si tiene tendencia se sugiere evaluar el componente estacional que mas se ajuste según las definiciones anteriores**')
+            
+
+        elif explicacion=='ACF':
+            acf = sm.tsa.acf(self.trans.df['Precio_final'], nlags=len(self.trans.df)-1)
+            # Graficamos el ACF
+            plt.figure(figsize=(10, 6))
+            plt.stem(acf)
+            plt.xlabel('Lag')
+            plt.ylabel('Autocorrelación')
+            plt.title('Gráfico de Autocorrelación (ACF)')
+            plt.show()
+            st.pyplot()
+            st.write('''La ACF te ayuda a ver si hay un patrón que se repite en ciertos momentos, como si hubiera un evento especial que ocurre en la misma época cada cierto periodo de tiempo. Si ves picos en ciertos momentos en la ACF, eso podría significar que hay un componente estacional en esos momentos, entonces se recomienda activar el componente estacional con la alternativa TRUE''')
+        
