@@ -3,6 +3,8 @@ import pandas as pd
 from Transformacion_datos import pronosticar_precio_reses
 import streamlit as st
 from openpyxl.styles import PatternFill
+import numpy as np
+import statsmodels.api as sm
 
 class Visualizacion_pronostico_reses:
     '''
