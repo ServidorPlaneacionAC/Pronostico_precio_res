@@ -122,8 +122,8 @@ class pronosticar_precio_reses:
                                    'Pronóstico':self.pronostico,
                                    'Banda superior de confianza 95%':self.intervalo_confianza[:,1],
                                    'Banda inferior de confianza 95%':self.intervalo_confianza[:,0],
-                                   'Banda superior de confianza 50%':self.intervalo_confianza2[:,1],
-                                   'Banda inferior de confianza 50%':self.intervalo_confianza2[:,0],
+                                   'Banda superior de confianza 65%':self.intervalo_confianza2[:,1],
+                                   'Banda inferior de confianza 65%':self.intervalo_confianza2[:,0],
                                    })
         df_resultado=df_resultado.set_index('Periodo')
         return df_resultado
