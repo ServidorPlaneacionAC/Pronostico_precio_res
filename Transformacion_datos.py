@@ -4,6 +4,7 @@ from datetime import datetime
 import pmdarima as pm
 from pmdarima import auto_arima
 import matplotlib.pyplot as plt
+from scipy.stats import norm
 
 class pronosticar_precio_reses:
     
@@ -74,6 +75,20 @@ class pronosticar_precio_reses:
         """       
         st.set_option('deprecation.showPyplotGlobalUse', False)
         self.pronostico, self.intervalo_confianza = self.modelo_arima.predict(n_periods=self.periodos_predecir, return_conf_int=True)
+
+        nivel_confianza = 0.75
+
+        # Calcular el valor crítico z para el nivel de confianza dado
+        z = norm.ppf((1 + nivel_confianza) / 2)
+
+        # Calcular el ancho del intervalo de confianza ajustado
+        ancho_intervalo_ajustado = z * (intervalo_confianza[:, 1] - intervalo_confianza[:, 0])
+
+        st.write(95)
+        st.write(self.intervalo_confianza)
+        st.write(75)
+        st.write(ancho_intervalo_ajustado)
+
         self.proximo_periodo = pd.date_range(start=self.df.index[-1], periods=self.periodos_predecir, freq='W')
 
     def imprimir_pronostico(self) -> None:  
