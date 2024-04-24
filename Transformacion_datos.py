@@ -94,7 +94,7 @@ class pronosticar_precio_reses:
         st.write(self.intervalo_confianza)
         st.write(75)
         st.write(intervalo_confianza)
-
+        self.intervalo_confianza2=intervalo_confianza
         self.proximo_periodo = pd.date_range(start=self.df.index[-1], periods=self.periodos_predecir, freq='W')
 
     def imprimir_pronostico(self) -> None:  
@@ -112,6 +112,7 @@ class pronosticar_precio_reses:
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
         plt.plot(self.proximo_periodo, self.pronostico, label='Pronóstico', color='red')
         plt.fill_between(self.proximo_periodo, self.intervalo_confianza[:, 0], self.intervalo_confianza[:, 1], color='pink', alpha=0.3)
+        plt.fill_between(self.proximo_periodo, self.intervalo_confianza2[:, 0], self.intervalo_confianza2[:, 1], color='blue', alpha=0.3)
         plt.title('Comparación de pronóstico vs. datos reales')
         plt.xlabel('Fecha')
         plt.ylabel('Valor')
