@@ -150,6 +150,7 @@ class Visualizacion_pronostico_reses:
         with col2:
             periodos_predecir = st.slider("Periodos a pronosticar", 1, self.trans.df.shape[0],10, 1)
             self.trans.trend = st.selectbox('Agregar componente de tendencia:', [None,'c','t','ct'])
+        self.mostrar_explicacion_variables()
         self.trans.generar_modelo()
         self.trans.periodos_predecir=periodos_predecir
         self.trans.elementos_mostrar=mostrar_serie_real     
