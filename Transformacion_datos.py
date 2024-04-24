@@ -93,7 +93,7 @@ class pronosticar_precio_reses:
         st.write(95)
         st.write(self.intervalo_confianza)
         st.write(75)
-        st.write(ancho_intervalo_ajustado)
+        st.write(intervalo_confianza)
 
         self.proximo_periodo = pd.date_range(start=self.df.index[-1], periods=self.periodos_predecir, freq='W')
 
