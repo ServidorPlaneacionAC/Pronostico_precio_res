@@ -75,6 +75,7 @@ class pronosticar_precio_reses:
         """       
         st.set_option('deprecation.showPyplotGlobalUse', False)
         self.pronostico, self.intervalo_confianza = self.modelo_arima.predict(n_periods=self.periodos_predecir, return_conf_int=True)
+        st.write(type(self.intervalo_confianza))
         intervalo_confianza=None
         nivel_confianza = 0.5
         z = norm.ppf((1 + nivel_confianza) / 2)
