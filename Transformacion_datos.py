@@ -75,15 +75,20 @@ class pronosticar_precio_reses:
         """       
         st.set_option('deprecation.showPyplotGlobalUse', False)
         self.pronostico, self.intervalo_confianza = self.modelo_arima.predict(n_periods=self.periodos_predecir, return_conf_int=True)
-
+        
+        # Definir el nivel de confianza deseado (por ejemplo, 75%)
         nivel_confianza = 0.75
 
         # Calcular el valor crítico z para el nivel de confianza dado
         z = norm.ppf((1 + nivel_confianza) / 2)
 
         # Calcular el ancho del intervalo de confianza ajustado
-        ancho_intervalo_ajustado = z * (self.intervalo_confianza[:, 1] - self.intervalo_confianza[:, 0])
+        ancho_intervalo_ajustado = z * (intervalo_confianza[:, 1] - intervalo_confianza[:, 0])
 
+        # Ajustar el intervalo de confianza
+        intervalo_confianza[:, 0] = pronostico - ancho_intervalo_ajustado / 2
+        intervalo_confianza[:, 1] = pronostico + ancho_intervalo_ajustado / 2
+       
         st.write(95)
         st.write(self.intervalo_confianza)
         st.write(75)
