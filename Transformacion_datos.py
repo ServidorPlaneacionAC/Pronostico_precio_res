@@ -87,8 +87,8 @@ class pronosticar_precio_reses:
         ancho_intervalo_ajustado = z * (intervalo_confianza[:, 1] - intervalo_confianza[:, 0])
 
         # Ajustar el intervalo de confianza
-        intervalo_confianza[:, 0] = pronostico - ancho_intervalo_ajustado / 2
-        intervalo_confianza[:, 1] = pronostico + ancho_intervalo_ajustado / 2
+        intervalo_confianza[:, 0] = self.pronostico - ancho_intervalo_ajustado / 2
+        intervalo_confianza[:, 1] = self.pronostico + ancho_intervalo_ajustado / 2
        
         st.write(95)
         st.write(self.intervalo_confianza)
