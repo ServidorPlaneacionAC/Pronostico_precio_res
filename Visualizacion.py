@@ -5,6 +5,7 @@ import streamlit as st
 from openpyxl.styles import PatternFill
 import numpy as np
 import statsmodels.api as sm
+import matplotlib.pyplot as plt
 
 class Visualizacion_pronostico_reses:
     '''
