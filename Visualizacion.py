@@ -179,7 +179,7 @@ class Visualizacion_pronostico_reses:
             st.write('''La ACF te ayuda a ver si hay un patrón que se repite en ciertos momentos, como si hubiera un evento especial que ocurre en la misma época cada cierto periodo de tiempo. Si ves picos en ciertos momentos en la ACF, eso podría significar que hay un componente estacional en esos momentos, entonces se recomienda activar el componente estacional con la alternativa TRUE''')
 
     def explicar_tendencia(self, serie):
-        if st.button('Ver ayuda sobre componente estacional'):
+        if st.button('Ver ayuda sobre componente de tendencia'):
             st.write('''El componente de tendencia de una serie de tiempo se refiere a la dirección general en la que cambian los datos a lo largo del tiempo. Es como observar si una serie de tiempo está subiendo, bajando o permaneciendo relativamente constante en el largo plazo, esta puede ser de 4 tipos:''')
             st.write('''**None:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
             st.write('''**Constante (c):** En una tendencia constante, los datos muestran un cambio uniforme en una dirección específica a lo largo del tiempo, este cambio no necesariamente sigue una línea recta, pero crece un valor constante''')
