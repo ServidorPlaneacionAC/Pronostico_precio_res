@@ -75,26 +75,14 @@ class pronosticar_precio_reses:
         """       
         st.set_option('deprecation.showPyplotGlobalUse', False)
         self.pronostico, self.intervalo_confianza = self.modelo_arima.predict(n_periods=self.periodos_predecir, return_conf_int=True)
-        pronostico, intervalo_confianza = self.modelo_arima.predict(n_periods=self.periodos_predecir, return_conf_int=True)
         
-        # Definir el nivel de confianza deseado (por ejemplo, 75%)
-        nivel_confianza = 0.45
-
-        # Calcular el valor crítico z para el nivel de confianza dado
+        nivel_confianza = 0.5
         z = norm.ppf((1 + nivel_confianza) / 2)
-
-        # Calcular el ancho del intervalo de confianza ajustado
-        ancho_intervalo_ajustado = z * (intervalo_confianza[:, 1] - intervalo_confianza[:, 0])
-
-        # Ajustar el intervalo de confianza
+        ancho_intervalo_ajustado = z * (self.intervalo_confianza[:, 1] - self.intervalo_confianza[:, 0])
         intervalo_confianza[:, 0] = self.pronostico - ancho_intervalo_ajustado / 2
-        intervalo_confianza[:, 1] = self.pronostico + ancho_intervalo_ajustado / 2
-       
-        st.write(95)
-        st.write(self.intervalo_confianza)
-        st.write(75)
-        st.write(intervalo_confianza)
+        intervalo_confianza[:, 1] = self.pronostico + ancho_intervalo_ajustado / 2       
         self.intervalo_confianza2=intervalo_confianza
+
         self.proximo_periodo = pd.date_range(start=self.df.index[-1], periods=self.periodos_predecir, freq='W')
 
     def imprimir_pronostico(self) -> None:  
@@ -112,7 +100,7 @@ class pronosticar_precio_reses:
         plt.plot(self.df.index[inicio_serie_real:], self.df[inicio_serie_real:], label='Datos reales', color='blue')
         plt.plot(self.proximo_periodo, self.pronostico, label='Pronóstico', color='red')
         plt.fill_between(self.proximo_periodo, self.intervalo_confianza[:, 0], self.intervalo_confianza[:, 1], color='pink', alpha=0.3)
-        plt.fill_between(self.proximo_periodo, self.intervalo_confianza2[:, 0], self.intervalo_confianza2[:, 1], color='blue', alpha=0.3)
+        plt.fill_between(self.proximo_periodo, self.intervalo_confianza2[:, 0], self.intervalo_confianza2[:, 1], color='yellow', alpha=0.3)
         plt.title('Comparación de pronóstico vs. datos reales')
         plt.xlabel('Fecha')
         plt.ylabel('Valor')
@@ -128,7 +116,13 @@ class pronosticar_precio_reses:
             Devuelve:
             - DataFrame: DataFrame con los períodos y el pronóstico.
         """
-        df_resultado=pd.DataFrame({'Periodo':self.proximo_periodo,'Pronóstico':self.pronostico})
+        df_resultado=pd.DataFrame({'Periodo':self.proximo_periodo,
+                                   'Pronóstico':self.pronostico,
+                                   'Banda superior de confianza 95%':self.intervalo_confianza[:,1],
+                                   'Banda inferior de confianza 95%':self.intervalo_confianza[:,0],
+                                   'Banda superior de confianza 50%':self.intervalo_confianza2[:,1],
+                                   'Banda inferior de confianza 50%':self.intervalo_confianza2[:,0],
+                                   })
         df_resultado=df_resultado.set_index('Periodo')
         return df_resultado
 
