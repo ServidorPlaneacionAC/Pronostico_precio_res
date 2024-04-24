@@ -82,7 +82,7 @@ class pronosticar_precio_reses:
         z = norm.ppf((1 + nivel_confianza) / 2)
 
         # Calcular el ancho del intervalo de confianza ajustado
-        ancho_intervalo_ajustado = z * (intervalo_confianza[:, 1] - intervalo_confianza[:, 0])
+        ancho_intervalo_ajustado = z * (self.intervalo_confianza[:, 1] - self.intervalo_confianza[:, 0])
 
         st.write(95)
         st.write(self.intervalo_confianza)
