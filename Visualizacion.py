@@ -147,7 +147,7 @@ class Visualizacion_pronostico_reses:
         
         periodos_muestra = st.slider("Periodos de muestra", 5, self.trans.df.shape[0], self.trans.df.shape[0], 1)
         col1, col2 = st.columns(2)
-        ayuda==None
+        ayuda=None
         with col1:
             mostrar_serie_real = st.slider("Periodos a mostrar", 5, self.trans.df.shape[0], self.trans.df.shape[0], 1)
             self.trans.seasonal = st.selectbox('Agregar componente estacional:', [True,False])
