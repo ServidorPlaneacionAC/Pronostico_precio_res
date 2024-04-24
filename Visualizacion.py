@@ -20,7 +20,6 @@ class Visualizacion_pronostico_reses:
         self.dataframe_serie_tiempo=None
         self.df_regresores=None
         self.columnas_df=['Año','Semana','Cantidad_Reses','Precio_Planta']
-        self.trans=None
         self.mostrar_navegabilidad()
 
     def pantalla_principal(self) -> None:
@@ -140,37 +139,38 @@ class Visualizacion_pronostico_reses:
 
     def operar_pronostico(self,categoria=None):
         if categoria is None:
-            self.trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
+            trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
         else:
-            self.trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria])     
+            trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria])     
         self.trans.combinar_partidas_reses()
         
-        periodos_muestra = st.slider("Periodos de muestra", 5, self.trans.df.shape[0], self.trans.df.shape[0], 1)
+        periodos_muestra = st.slider("Periodos de muestra", 5, trans.df.shape[0], trans.df.shape[0], 1)
         col1, col2 = st.columns(2)
         ayuda=None
         with col1:
-            mostrar_serie_real = st.slider("Periodos a mostrar", 5, self.trans.df.shape[0], self.trans.df.shape[0], 1)
-            self.trans.seasonal = st.selectbox('Agregar componente estacional:', [True,False])
+            mostrar_serie_real = st.slider("Periodos a mostrar", 5, trans.df.shape[0], trans.df.shape[0], 1)
+            trans.seasonal = st.selectbox('Agregar componente estacional:', [True,False])
             if st.button('Ver ayuda sobre componente estacional'):
                 ayuda='estacional'
         with col2:
-            periodos_predecir = st.slider("Periodos a pronosticar", 1, self.trans.df.shape[0],10, 1)
-            self.trans.trend = st.selectbox('Agregar componente de tendencia:', [None,'c','t','ct'])
+            periodos_predecir = st.slider("Periodos a pronosticar", 1, trans.df.shape[0],10, 1)
+            trans.trend = st.selectbox('Agregar componente de tendencia:', [None,'c','t','ct'])
             if st.button('Ver ayuda sobre componente de tendencia'):
                 ayuda='tendecia'
         
         if 'estacional'==ayuda:
-            self.explicar_estacionalidad(self.trans.df['Precio_final'])
+            self.explicar_estacionalidad(trans.df['Precio_final'])
         elif 'tendecia'==ayuda:
-            self.explicar_tendencia(self.trans.df['Precio_final'])
-        self.trans.generar_modelo()
-        self.trans.periodos_predecir=periodos_predecir
-        self.trans.elementos_mostrar=mostrar_serie_real     
-        self.trans.generar_pronostico()
-        self.trans.imprimir_pronostico()
-        st.write(self.trans.llevar_pronostico_a_df())
+            self.explicar_tendencia(trans.df['Precio_final'])
+
+        trans.generar_modelo(periodos_muestra)
+        trans.periodos_predecir=periodos_predecir
+        trans.elementos_mostrar=mostrar_serie_real     
+        trans.generar_pronostico()
+        trans.imprimir_pronostico()
+        st.write(trans.llevar_pronostico_a_df())
         st.info('El mejor modelo encontrado es')
-        st.write(self.trans.modelo_arima.summary())     
+        st.write(trans.modelo_arima.summary())     
 
     def explicar_estacionalidad(self, serie):
         # if st.button('Ver ayuda sobre componente estacional'):
