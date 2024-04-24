@@ -150,10 +150,12 @@ class Visualizacion_pronostico_reses:
         with col1:
             mostrar_serie_real = st.slider("Periodos a mostrar", 5, self.trans.df.shape[0], self.trans.df.shape[0], 1)
             self.trans.seasonal = st.selectbox('Agregar componente estacional:', [True,False])
+            self.explicar_estacionalidad(self.trans.df['Precio_final'])
         with col2:
             periodos_predecir = st.slider("Periodos a pronosticar", 1, self.trans.df.shape[0],10, 1)
             self.trans.trend = st.selectbox('Agregar componente de tendencia:', [None,'c','t','ct'])
-        self.mostrar_explicacion_variables()
+            self.explicar_tendencia(self.trans.df['Precio_final'])
+        
         self.trans.generar_modelo()
         self.trans.periodos_predecir=periodos_predecir
         self.trans.elementos_mostrar=mostrar_serie_real     
@@ -162,6 +164,38 @@ class Visualizacion_pronostico_reses:
         st.write(self.trans.llevar_pronostico_a_df())
         st.info('El mejor modelo encontrado es')
         st.write(self.trans.modelo_arima.summary())     
+
+    def explicar_estacionalidad(self, serie):
+        if st.button('Ver ayuda sobre componente estacional'):
+            acf = sm.tsa.acf(serie, nlags=len(serie)-1)
+            # Graficamos el ACF
+            plt.figure(figsize=(10, 6))
+            plt.stem(acf)
+            plt.xlabel('Lag')
+            plt.ylabel('Autocorrelación')
+            plt.title('Gráfico de Autocorrelación (ACF)')
+            plt.show()
+            st.pyplot()
+            st.write('''La ACF te ayuda a ver si hay un patrón que se repite en ciertos momentos, como si hubiera un evento especial que ocurre en la misma época cada cierto periodo de tiempo. Si ves picos en ciertos momentos en la ACF, eso podría significar que hay un componente estacional en esos momentos, entonces se recomienda activar el componente estacional con la alternativa TRUE''')
+
+    def explicar_tendencia(self, serie):
+        if st.button('Ver ayuda sobre componente estacional'):
+            st.write('''El componente de tendencia de una serie de tiempo se refiere a la dirección general en la que cambian los datos a lo largo del tiempo. Es como observar si una serie de tiempo está subiendo, bajando o permaneciendo relativamente constante en el largo plazo, esta puede ser de 4 tipos:''')
+            st.write('''**None:** Quiere decir que nuestra serie no tiene ninguna tendencia ''')
+            st.write('''**Constante (c):** En una tendencia constante, los datos muestran un cambio uniforme en una dirección específica a lo largo del tiempo, este cambio no necesariamente sigue una línea recta, pero crece un valor constante''')
+            st.write('''**Lineal (t):** En una tendencia lineal, los datos muestran un cambio permanente en una dirección específica a lo largo del tiempo, y este cambio sigue una razon de crecimiento ''')
+            st.write('''**Constante y lineal (ct):** Usado en movimientos que contienen ambos tipos de tendencia ''')
+
+            from statsmodels.tsa.stattools import adfuller, kpss
+
+            # Aplicar la prueba ADF
+            adf_result = adfuller(serie)
+            st.write(f'Al realizar la prueba estadistica Prueba de Dickey-Fuller Aumentada (ADF) obtenemos un valor-p de {adf_result[1]}, concluyendo:')
+            if adf_result[1]<0.05:
+                st.write('**La serie no tiene tendencia se sugiere no agregar componente estacional**')
+            else:
+                st.write('**La serie si tiene tendencia se sugiere evaluar el componente estacional que mas se ajuste según las definiciones anteriores**')
+            
 
     def mostrar_explicacion_variables(self):
         '''
