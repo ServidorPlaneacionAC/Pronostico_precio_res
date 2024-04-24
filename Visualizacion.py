@@ -163,7 +163,7 @@ class Visualizacion_pronostico_reses:
         elif 'tendecia'==ayuda:
             self.explicar_tendencia(trans.df['Precio_final'])
 
-        trans.generar_modelo(periodos_muestra)
+        trans.generar_modelo()
         trans.periodos_predecir=periodos_predecir
         trans.elementos_mostrar=mostrar_serie_real     
         trans.generar_pronostico()
