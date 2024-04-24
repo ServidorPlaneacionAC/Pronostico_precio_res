@@ -48,7 +48,7 @@ class pronosticar_precio_reses:
         self.df=self.df.set_index('Periodo')
         self.df = self.df[~self.df.index.duplicated(keep='first')]        
 
-    def generar_modelo(self) -> None:
+    def generar_modelo(self,tamano_muestra) -> None:
         """
             Genera un modelo ARIMA para la serie temporal.
 
@@ -57,7 +57,7 @@ class pronosticar_precio_reses:
 
             No devuelve nada, pero asigna el modelo resultante a la variable modelo_arima.
         """
-        serie_tiempo = self.df
+        serie_tiempo = self.df.iloc[:-tamano_muestra,:]
         self.modelo_arima = pm.auto_arima(serie_tiempo
                                             ,seasonal=self.seasonal
                                             ,trend=self.trend)
