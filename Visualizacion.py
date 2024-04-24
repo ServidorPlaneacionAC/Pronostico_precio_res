@@ -159,9 +159,9 @@ class Visualizacion_pronostico_reses:
                 ayuda='tendecia'
         
         if 'estacional'==ayuda:
-            self.explicar_estacionalidad(trans.df['Precio_final'])
+            self.explicar_estacionalidad(trans.df['Precio_final'].iloc[-periodos_muestra:])
         elif 'tendecia'==ayuda:
-            self.explicar_tendencia(trans.df['Precio_final'])
+            self.explicar_tendencia(trans.df['Precio_final'].iloc[-periodos_muestra:])
 
         trans.generar_modelo(periodos_muestra)
         trans.periodos_predecir=periodos_predecir
