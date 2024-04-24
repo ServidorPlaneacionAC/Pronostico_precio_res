@@ -78,7 +78,7 @@ class pronosticar_precio_reses:
         pronostico, intervalo_confianza = self.modelo_arima.predict(n_periods=self.periodos_predecir, return_conf_int=True)
         
         # Definir el nivel de confianza deseado (por ejemplo, 75%)
-        nivel_confianza = 0.25
+        nivel_confianza = 0.95
 
         # Calcular el valor crítico z para el nivel de confianza dado
         z = norm.ppf((1 + nivel_confianza) / 2)
