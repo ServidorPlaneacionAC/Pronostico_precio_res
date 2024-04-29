@@ -26,7 +26,7 @@ class Visualizacion_pronostico_reses:
         '''
         Genera la pantalla principal, habilita la impresión del df de muestra, carga y trasnformación de datos
         '''
-        st.title("Pronóstico de reses")
+        st.title("Pronóstico de reses regresores")
         self.dataframe_serie_tiempo=self.habilitar_carga_datos("Cargar información XLSX")
         incluir_regresores=st.radio('Incluir variables externas como regresores',[False,True])
         if incluir_regresores: 
