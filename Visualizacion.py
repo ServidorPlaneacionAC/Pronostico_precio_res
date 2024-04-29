@@ -28,7 +28,7 @@ class Visualizacion_pronostico_reses:
         '''
         st.title("Pronóstico de reses regresores")
         self.dataframe_serie_tiempo=self.habilitar_carga_datos("Cargar información XLSX")
-        incluir_regresores=st.radio('Incluir variables externas como regresores',[False,True])
+        incluir_regresores=st.selectbox('Incluir variables externas como regresores',[False,True])
         if incluir_regresores: 
             self.df_regresores=self.habilitar_carga_datos("Cargar regresores")
         self.transformar_datos()
