@@ -59,14 +59,9 @@ class pronosticar_precio_reses:
         faltantes_regresores = self.df[~self.df.index.isin(self.df_regresores.index)]
         st.error("por favor validar, pues los siguientes periodos no tienen año y semana asiciada en los regresores externos")
         st.write(faltantes_regresores)        
-
         indices_a_eliminar = self.df_regresores[~self.df_regresores.index.isin(self.df.index)].index
-
-        # Elimina las filas de df_regresores que faltan en df
         self.df_regresores = self.df_regresores.drop(indices_a_eliminar)
-        st.info(self.df_regresores.shape)
-        st.info('Santi')
-        return False
+        return faltantes_regresores.shape[0]==0
 
     def generar_modelo(self,tamano_muestra) -> None:
         """
