@@ -29,7 +29,7 @@ class Visualizacion_pronostico_reses:
         st.title("Pronóstico de reses regresores")
         self.dataframe_serie_tiempo=self.habilitar_carga_datos("Cargar información XLSX")
         incluir_regresores=st.selectbox('',['Pronosticar únicamente con la información de la serie de tiempo','Incluir variables externas como regresores'])
-        if incluir_regresores!='Incluir variables externas como regresores': 
+        if incluir_regresores=='Incluir variables externas como regresores': 
             self.df_regresores=self.habilitar_carga_datos("Cargar regresores")
         else: 
             self.df_regresores=None
