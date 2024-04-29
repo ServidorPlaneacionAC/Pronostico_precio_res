@@ -28,9 +28,11 @@ class Visualizacion_pronostico_reses:
         '''
         st.title("Pronóstico de reses regresores")
         self.dataframe_serie_tiempo=self.habilitar_carga_datos("Cargar información XLSX")
-        incluir_regresores=st.selectbox(['Incluir variables externas como regresores','Pronosticar únicamente con la información de la serie de tiempo'])
+        incluir_regresores=st.selectbox('',['Incluir variables externas como regresores','Pronosticar únicamente con la información de la serie de tiempo'])
         if incluir_regresores!='Incluir variables externas como regresores': 
             self.df_regresores=self.habilitar_carga_datos("Cargar regresores")
+        else: 
+            self.df_regresores=None
         self.transformar_datos()
 
     def mostrar_navegabilidad(self):
@@ -142,13 +144,15 @@ class Visualizacion_pronostico_reses:
                 else:
                     st.error('El formato del archivo cargado no coincide con el esperado')
 
+
     def operar_pronostico(self,categoria=None):
         if categoria is None:
             trans=pronosticar_precio_reses(self.dataframe_serie_tiempo)
         else:
             trans=pronosticar_precio_reses(self.dataframe_serie_tiempo[self.dataframe_serie_tiempo['Categoria']==categoria])     
         trans.combinar_partidas_reses()
-        
+        if self.df_regresores is not None:
+            tras.agregar_regresores(self.df_regresores)
         periodos_muestra = st.slider("Periodos de muestra", 5, trans.df.shape[0], trans.df.shape[0], 1)
         col1, col2 = st.columns(2)
         ayuda=None
