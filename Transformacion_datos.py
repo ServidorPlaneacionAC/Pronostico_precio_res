@@ -57,12 +57,12 @@ class pronosticar_precio_reses:
         self.df_regresores['Periodo']=[datetime.strptime(f"{int(fila['Año'])} {int(fila['Semana'])}-1", "%Y %W-%w") for _, fila in df_regresores.iterrows()]
         self.df_regresores=self.df_regresores.set_index('Periodo')
         faltantes_regresores = self.df[~self.df.index.isin(self.df_regresores.index)]
-        if faltantes_regresores.shape[0]>0:
-            st.error("por favor validar, pues los siguientes periodos no tienen año y semana asiciada en los regresores externos")
-            st.write(faltantes_regresores)        
         indices_a_eliminar = self.df_regresores[~self.df_regresores.index.isin(self.df.index)].index
         self.df_regresores = self.df_regresores.drop(indices_a_eliminar)
-        return faltantes_regresores.shape[0]>0
+        if faltantes_regresores.shape[0]>0:
+            st.error("por favor validar, los siguientes periodos no tienen año y semana asiciada en los regresores externos, los regresores no se tendrán en cuenta para generar el modelo")
+            st.write(faltantes_regresores)  
+            self.df_regresores=None      
 
     def generar_modelo(self,tamano_muestra) -> None:
         """
@@ -74,7 +74,14 @@ class pronosticar_precio_reses:
             No devuelve nada, pero asigna el modelo resultante a la variable modelo_arima.
         """
         serie_tiempo = self.df.iloc[-tamano_muestra:,:]
-        self.modelo_arima = pm.auto_arima(serie_tiempo
+        if self.df_regresores is not NotImplemented:
+            regresores = self.df_regresores.iloc[-tamano_muestra:,:]
+            self.modelo_arima = pm.auto_arima(serie_tiempo
+                                                ,exogenous=regresores
+                                                ,seasonal=self.seasonal
+                                                ,trend=self.trend)
+        else:
+            self.modelo_arima = pm.auto_arima(serie_tiempo
                                             ,seasonal=self.seasonal
                                             ,trend=self.trend)
 
