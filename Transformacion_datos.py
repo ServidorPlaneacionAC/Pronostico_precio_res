@@ -75,12 +75,14 @@ class pronosticar_precio_reses:
         """
         serie_tiempo = self.df.iloc[-tamano_muestra:,:]
         if self.df_regresores is not None:
+            st.info('modelo con regresores')
             regresores = self.df_regresores.iloc[-tamano_muestra:,:]
             self.modelo_arima = pm.auto_arima(serie_tiempo
                                                 ,exogenous=regresores
                                                 ,seasonal=self.seasonal
                                                 ,trend=self.trend)
         else:
+            st.info('modelo sin regresores')
             self.modelo_arima = pm.auto_arima(serie_tiempo
                                             ,seasonal=self.seasonal
                                             ,trend=self.trend)
