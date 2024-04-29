@@ -62,6 +62,7 @@ class pronosticar_precio_reses:
 
         # eliminar_de_regresores = self.df_regresores[~self.df_regresores.i
         st.info(self.df_regresores.shape)
+        st.info('Santi')
         return False
 
     def generar_modelo(self,tamano_muestra) -> None:
