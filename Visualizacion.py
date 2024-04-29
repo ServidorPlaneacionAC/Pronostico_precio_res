@@ -28,7 +28,9 @@ class Visualizacion_pronostico_reses:
         '''
         st.title("Pronóstico de reses")
         self.dataframe_serie_tiempo=self.habilitar_carga_datos("Cargar información XLSX")
-        # self.df_regresores=self.habilitar_carga_datos("Cargar regresores")
+        incluir_regresores=st.radio('Incluir variables externas como regresores',[False,True])
+        if incluir_regresores: 
+            self.df_regresores=self.habilitar_carga_datos("Cargar regresores")
         self.transformar_datos()
 
     def mostrar_navegabilidad(self):
@@ -43,7 +45,8 @@ class Visualizacion_pronostico_reses:
             self.generacion_df_muestra(self.columnas_df)
             st.write('Cargar datos de una diferentes zonas indicando en la columna categoría la zona correspondiente')    
             self.generacion_df_muestra(self.columnas_df+['Categoria'])
-            # self.generacion_df_muestra(['Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3'])
+            st.write('Cargar datos de variables agenas al precio de la res que puedan ayudar a pronosticar el precio a futuro, se pueden agregar tantas como se consideren')    
+            self.generacion_df_muestra(['Año','Semana','Regresor_Externo1','Regresor_Externo2','Regresor_Externo3'])
         elif page=="¿Cómo funciona?":
             st.title("¿Cómo funciona?") 
             st.subheader('Carga de datos')
