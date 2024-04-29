@@ -81,6 +81,7 @@ class pronosticar_precio_reses:
                                                 ,exogenous=regresores
                                                 ,seasonal=self.seasonal
                                                 ,trend=self.trend)
+            st.write(regresores)
         else:
             st.info('modelo sin regresores')
             self.modelo_arima = pm.auto_arima(serie_tiempo
