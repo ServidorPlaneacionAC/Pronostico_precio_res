@@ -61,7 +61,7 @@ class pronosticar_precio_reses:
         st.write(faltantes_regresores)        
         indices_a_eliminar = self.df_regresores[~self.df_regresores.index.isin(self.df.index)].index
         self.df_regresores = self.df_regresores.drop(indices_a_eliminar)
-        return faltantes_regresores.shape[0]==0
+        return False
 
     def generar_modelo(self,tamano_muestra) -> None:
         """
