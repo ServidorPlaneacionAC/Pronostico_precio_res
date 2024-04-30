@@ -66,7 +66,7 @@ class pronosticar_precio_reses:
             self.df_regresores=None      
 
     def generar_modelo(self,tamano_muestra) -> None:
-        # self.otro()
+        self.otro()
         """
             Genera un modelo ARIMA para la serie temporal.
 
@@ -75,18 +75,18 @@ class pronosticar_precio_reses:
 
             No devuelve nada, pero asigna el modelo resultante a la variable modelo_arima.
         """
-        serie_tiempo = self.df.iloc[-tamano_muestra:,:]
-        if self.df_regresores is not None:
-            regresores = self.df_regresores.iloc[-tamano_muestra:,2:]
-            serie_tiempo_con_regresores=pd.concat([serie_tiempo,regresores], axis=1)
-            self.modelo_arima = pm.auto_arima(serie_tiempo_con_regresores['Precio_final']
-                                                ,exogenous=serie_tiempo_con_regresores.drop(columns=['Precio_final'])
-                                                ,seasonal=self.seasonal
-                                                ,trend=self.trend)
-        else:
-            self.modelo_arima = pm.auto_arima(serie_tiempo
-                                            ,seasonal=self.seasonal
-                                            ,trend=self.trend)
+        # serie_tiempo = self.df.iloc[-tamano_muestra:,:]
+        # if self.df_regresores is not None:
+        #     regresores = self.df_regresores.iloc[-tamano_muestra:,2:]
+        #     serie_tiempo_con_regresores=pd.concat([serie_tiempo,regresores], axis=1)
+        #     self.modelo_arima = pm.auto_arima(serie_tiempo_con_regresores['Precio_final']
+        #                                         ,exogenous=serie_tiempo_con_regresores.drop(columns=['Precio_final'])
+        #                                         ,seasonal=self.seasonal
+        #                                         ,trend=self.trend)
+        # else:
+        #     self.modelo_arima = pm.auto_arima(serie_tiempo
+        #                                     ,seasonal=self.seasonal
+        #                                     ,trend=self.trend)
     def otro(self):
         import numpy as np
         import pandas as pd
@@ -115,7 +115,7 @@ class pronosticar_precio_reses:
         modelo_sin_regresores = pm.auto_arima(serie_tiempo, seasonal=True, m=12)
 
         # Entrenar modelo ARIMA con regresores
-        modelo_con_regresores = pm.auto_arima(serie_tiempo_con_regresores, exogenous=regresores, seasonal=True, m=12)
+        modelo_con_regresores = pm.auto_arima(serie_tiempo, exogenous=regresores, seasonal=True, m=12)
 
         # Imprimir los modelos
         st.write("Modelo sin regresores:")
