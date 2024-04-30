@@ -56,6 +56,7 @@ class pronosticar_precio_reses:
         self.df_regresores=df_regresores
         self.df_regresores['Periodo']=[datetime.strptime(f"{int(fila['Año'])} {int(fila['Semana'])}-1", "%Y %W-%w") for _, fila in df_regresores.iterrows()]
         self.df_regresores=self.df_regresores.set_index('Periodo')
+        self.df_regresores = self.df_regresores[~self.df_regresores.index.duplicated(keep='first')]     
         faltantes_regresores = self.df[~self.df.index.isin(self.df_regresores.index)]
         indices_a_eliminar = self.df_regresores[~self.df_regresores.index.isin(self.df.index)].index
         self.df_regresores = self.df_regresores.drop(indices_a_eliminar)
