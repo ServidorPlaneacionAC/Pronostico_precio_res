@@ -81,8 +81,8 @@ class pronosticar_precio_reses:
             # serie_tiempo_con_regresores = serie_tiempo + regresores.sum(axis=1)
             serie_tiempo_con_regresores=pd.concat([serie_tiempo,regresores], axis=1)
             st.write(serie_tiempo_con_regresores)
-            self.modelo_arima = pm.auto_arima(serie_tiempo_con_regresores
-                                                ,exogenous=regresores
+            self.modelo_arima = pm.auto_arima(serie_tiempo_con_regresores['Precio_final']
+                                                ,exogenous=serie_tiempo_con_regresores['TRM']
                                                 ,seasonal=self.seasonal
                                                 ,trend=self.trend)
         else:
