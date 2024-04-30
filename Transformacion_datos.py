@@ -66,7 +66,7 @@ class pronosticar_precio_reses:
             self.df_regresores=None      
 
     def generar_modelo(self,tamano_muestra) -> None:
-        self.otro()
+        # self.otro()
         """
             Genera un modelo ARIMA para la serie temporal.
 
@@ -78,11 +78,9 @@ class pronosticar_precio_reses:
         serie_tiempo = self.df.iloc[-tamano_muestra:,:]
         if self.df_regresores is not None:
             regresores = self.df_regresores.iloc[-tamano_muestra:,2:]
-            # serie_tiempo_con_regresores = serie_tiempo + regresores.sum(axis=1)
             serie_tiempo_con_regresores=pd.concat([serie_tiempo,regresores], axis=1)
-            st.write(serie_tiempo_con_regresores)
             self.modelo_arima = pm.auto_arima(serie_tiempo_con_regresores['Precio_final']
-                                                ,exogenous=serie_tiempo_con_regresores['TRM']
+                                                ,exogenous=serie_tiempo_con_regresores.drop(columns=['Precio_final'])
                                                 ,seasonal=self.seasonal
                                                 ,trend=self.trend)
         else:
