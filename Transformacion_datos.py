@@ -66,6 +66,7 @@ class pronosticar_precio_reses:
             self.df_regresores=None      
 
     def generar_modelo(self,tamano_muestra) -> None:
+        self.otro()
         """
             Genera un modelo ARIMA para la serie temporal.
 
@@ -85,7 +86,7 @@ class pronosticar_precio_reses:
             self.modelo_arima = pm.auto_arima(serie_tiempo
                                             ,seasonal=self.seasonal
                                             ,trend=self.trend)
-
+    def otro(self):
         import numpy as np
         import pandas as pd
         import pmdarima as pm
