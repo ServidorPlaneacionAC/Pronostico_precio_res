@@ -84,7 +84,7 @@ class pronosticar_precio_reses:
                                                 ,trend=self.trend)
             st.write(regresores)
             st.write(serie_tiempo)
-            st.write(f'serie_tiempo {serie_tiempo.shape[0]}  regresores {regresores.shape[0]}')
+            st.write(f'serie_tiempo {serie_tiempo.dtypes}  regresores {regresores.dtypes}')
         else:
             st.info('modelo sin regresores')
             self.modelo_arima = pm.auto_arima(serie_tiempo
