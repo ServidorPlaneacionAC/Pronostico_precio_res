@@ -76,20 +76,46 @@ class pronosticar_precio_reses:
         """
         serie_tiempo = self.df.iloc[-tamano_muestra:,:]
         if self.df_regresores is not None:
-            st.info('modelo con regresores')
-            regresores = self.df_regresores.iloc[-tamano_muestra:,3:]
+            regresores = self.df_regresores.iloc[-tamano_muestra:,2:]
             self.modelo_arima = pm.auto_arima(serie_tiempo
                                                 ,exogenous=regresores
                                                 ,seasonal=self.seasonal
                                                 ,trend=self.trend)
-            st.write(regresores)
-            st.write(serie_tiempo)
-            st.write(f'serie_tiempo {serie_tiempo.dtypes}  regresores {regresores.dtypes}')
         else:
-            st.info('modelo sin regresores')
             self.modelo_arima = pm.auto_arima(serie_tiempo
                                             ,seasonal=self.seasonal
                                             ,trend=self.trend)
+
+        import numpy as np
+        import pandas as pd
+        import pmdarima as pm
+        import matplotlib.pyplot as plt
+
+        # Generar una serie temporal sintética
+        np.random.seed(42)
+        serie_tiempo = pd.Series(np.random.normal(loc=0, scale=1, size=100), index=pd.date_range(start='2022-01-01', periods=100))
+
+        # Generar regresores sintéticos
+        regresores = pd.DataFrame({
+            'regresor_1': np.random.normal(loc=0, scale=1, size=100),
+            'regresor_2': np.random.normal(loc=0, scale=1, size=100)
+        }, index=serie_tiempo.index)
+
+        # Agregar regresores a la serie temporal
+        serie_tiempo_con_regresores = serie_tiempo + regresores.sum(axis=1)
+
+        # Entrenar modelo ARIMA sin regresores
+        modelo_sin_regresores = pm.auto_arima(serie_tiempo, seasonal=True, m=12)
+
+        # Entrenar modelo ARIMA con regresores
+        modelo_con_regresores = pm.auto_arima(serie_tiempo_con_regresores, exogenous=regresores, seasonal=True, m=12)
+
+        # Imprimir los modelos
+        st.write("Modelo sin regresores:")
+        st.write(modelo_sin_regresores.summary())
+        st.write("\nModelo con regresores:")
+        st.write(modelo_con_regresores.summary())
+
 
     def generar_pronostico(self) -> None: 
         """
