@@ -66,7 +66,7 @@ class pronosticar_precio_reses:
             self.df_regresores=None      
 
     def generar_modelo(self,tamano_muestra) -> None:
-        # self.otro()
+        self.otro()
         """
             Genera un modelo ARIMA para la serie temporal.
 
@@ -106,18 +106,19 @@ class pronosticar_precio_reses:
 
         # Agregar regresores a la serie temporal
         serie_tiempo_con_regresores = serie_tiempo + regresores.sum(axis=1)
+        st.write('serie_tiempo_con_regresores eje')
+        st.write(serie_tiempo_con_regresores)
+        # # Entrenar modelo ARIMA sin regresores
+        # modelo_sin_regresores = pm.auto_arima(serie_tiempo, seasonal=True, m=12)
 
-        # Entrenar modelo ARIMA sin regresores
-        modelo_sin_regresores = pm.auto_arima(serie_tiempo, seasonal=True, m=12)
+        # # Entrenar modelo ARIMA con regresores
+        # modelo_con_regresores = pm.auto_arima(serie_tiempo_con_regresores, exogenous=regresores, seasonal=True, m=12)
 
-        # Entrenar modelo ARIMA con regresores
-        modelo_con_regresores = pm.auto_arima(serie_tiempo_con_regresores, exogenous=regresores, seasonal=True, m=12)
-
-        # Imprimir los modelos
-        st.write("Modelo sin regresores:")
-        st.write(modelo_sin_regresores.summary())
-        st.write("\nModelo con regresores:")
-        st.write(modelo_con_regresores.summary())
+        # # Imprimir los modelos
+        # st.write("Modelo sin regresores:")
+        # st.write(modelo_sin_regresores.summary())
+        # st.write("\nModelo con regresores:")
+        # st.write(modelo_con_regresores.summary())
 
 
     def generar_pronostico(self) -> None: 
