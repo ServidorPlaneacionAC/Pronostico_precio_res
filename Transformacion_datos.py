@@ -78,7 +78,8 @@ class pronosticar_precio_reses:
         serie_tiempo = self.df.iloc[-tamano_muestra:,:]
         if self.df_regresores is not None:
             regresores = self.df_regresores.iloc[-tamano_muestra:,2:]
-            serie_tiempo_con_regresores = serie_tiempo + regresores.sum(axis=1)
+            # serie_tiempo_con_regresores = serie_tiempo + regresores.sum(axis=1)
+            serie_tiempo_con_regresores=pd.concat([serie_tiempo,regresores], axis=1)
             st.write(serie_tiempo_con_regresores)
             self.modelo_arima = pm.auto_arima(serie_tiempo_con_regresores
                                                 ,exogenous=regresores
