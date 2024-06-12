@@ -206,3 +206,5 @@ class Visualizacion_pronostico_reses:
                 st.write('**La serie si tiene tendencia se sugiere evaluar el componente estacional que mas se ajuste según las definiciones anteriores**')
             
 
+
+
