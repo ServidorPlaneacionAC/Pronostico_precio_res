@@ -1,8 +1,8 @@
-pandas
+pandas==1.5.3
 streamlit
 openpyxl
 datetime
-pmdarima
+pmdarima==2.0.4
 matplotlib
-statsmodels
-numpy==1.21.0
+statsmodels==0.14.1
+numpy==1.23.5
